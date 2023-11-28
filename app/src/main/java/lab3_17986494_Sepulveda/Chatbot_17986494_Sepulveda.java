@@ -9,5 +9,7 @@ package lab3_17986494_Sepulveda;
  * @author nic_s
  */
 public class Chatbot_17986494_Sepulveda {
+    private int id;
+    private String name-msg;
     
 }
