@@ -8,6 +8,6 @@ package lab3_17986494_Sepulveda;
  *
  * @author nic_s
  */
-public class Chatbot {
+public class Chatbot_17986494_Sepulveda {
     
 }

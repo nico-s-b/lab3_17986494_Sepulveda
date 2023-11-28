@@ -8,6 +8,10 @@ package lab3_17986494_Sepulveda;
  *
  * @author nic_s
  */
-public class Flow {
-    
+public class Option_17986494_Sepulveda {
+    int code;
+    String message;
+    int chatbotCodeLink;
+    int flowCodeLink;
+    List<String> keywords;
 }

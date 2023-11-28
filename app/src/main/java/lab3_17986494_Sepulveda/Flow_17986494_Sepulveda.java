@@ -8,6 +8,6 @@ package lab3_17986494_Sepulveda;
  *
  * @author nic_s
  */
-public class User {
+public class Flow_17986494_Sepulveda {
     
 }
