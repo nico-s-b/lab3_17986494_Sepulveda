@@ -31,6 +31,12 @@ public class Option_17986494_Sepulveda {
         this.keywords = keywords;
     }
 
+    //Add keyword
+    void addKeyword(String keyword){
+        if (keyword != null && !keywords.contains(keyword)){
+            this.keywords.add(keyword);
+        }
+    }
     
     //Getters
     public int getCode() {
