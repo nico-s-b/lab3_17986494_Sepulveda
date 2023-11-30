@@ -4,7 +4,7 @@
  */
 package lab3_17986494_Sepulveda;
 
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  *
@@ -13,8 +13,10 @@ import java.util.List;
 public class Flow_17986494_Sepulveda {
     private int id;
     private String nameMessage;
-    private List<Option_17986494_Sepulveda> options;
+    private ArrayList<Option_17986494_Sepulveda> options;
 
+    
+    
     public int getId() {
         return id;
     }
@@ -23,7 +25,7 @@ public class Flow_17986494_Sepulveda {
         return nameMessage;
     }
 
-    public List<Option_17986494_Sepulveda> getOptions() {
+    public ArrayList<Option_17986494_Sepulveda> getOptions() {
         return options;
     }
 
@@ -35,7 +37,7 @@ public class Flow_17986494_Sepulveda {
         this.nameMessage = nameMessage;
     }
 
-    public void setOptions(List<Option_17986494_Sepulveda> options) {
+    public void setOptions(ArrayList<Option_17986494_Sepulveda> options) {
         this.options = options;
     }
     

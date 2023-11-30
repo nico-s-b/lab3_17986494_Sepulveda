@@ -4,7 +4,7 @@
  */
 package lab3_17986494_Sepulveda;
 
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  *
@@ -15,8 +15,21 @@ public class Chatbot_17986494_Sepulveda {
     private String namem;
     private String welcomeMessage;
     private int startFlowId;
-    private List<Flow_17986494_Sepulveda> flows;
+    private ArrayList<Flow_17986494_Sepulveda> flows;
 
+    public Chatbot_17986494_Sepulveda(){
+        this.flows = new ArrayList<>();
+    }
+    
+    public void addFlowToChatbot(Flow_17986494_Sepulveda flow){
+        for (Flow_17986494_Sepulveda fl : this.flows){
+            if (fl.getId() == flow.getId()){
+                throw new IllegalArgumentException("Ya existe un flow con el mismo código en el chatbot.");
+            }
+        }
+        this.flows.add(flow);
+    }
+    
     public int getId() {
         return id;
     }
@@ -49,11 +62,11 @@ public class Chatbot_17986494_Sepulveda {
         this.startFlowId = startFlowId;
     }
 
-    public List<Flow_17986494_Sepulveda> getFlows() {
+    public ArrayList<Flow_17986494_Sepulveda> getFlows() {
         return flows;
     }
 
-    public void setFlows(List<Flow_17986494_Sepulveda> flows) {
+    public void setFlows(ArrayList<Flow_17986494_Sepulveda> flows) {
         this.flows = flows;
     }
     

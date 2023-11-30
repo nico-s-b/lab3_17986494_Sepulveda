@@ -4,7 +4,7 @@
  */
 package lab3_17986494_Sepulveda;
 
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  *
@@ -17,26 +17,21 @@ public class Option_17986494_Sepulveda {
     private String message;
     private int chatbotCodeLink;
     private int flowCodeLink;
-    private List<String> keywords;
+    private ArrayList<String> keywords;
     
     //Constructor por defecto
-    public Option_17986494_Sepulveda(){}
-    
-    //Constructor de nuevo objeto
-    public Option_17986494_Sepulveda(int code, String message, int chatbotCodeLink, int flowCodeLink, List<String> keywords){
-        this.code = code;
-        this.message = message;
-        this.chatbotCodeLink = chatbotCodeLink;
-        this.flowCodeLink = flowCodeLink;
-        this.keywords = keywords;
+    public Option_17986494_Sepulveda(){
+        this.keywords = new ArrayList<>();
     }
-
+    
     //Add keyword
-    void addKeyword(String keyword){
+    public void addKeyword(String keyword){
         if (keyword != null && !keywords.contains(keyword)){
             this.keywords.add(keyword);
         }
     }
+    
+    
     
     //Getters
     public int getCode() {
@@ -55,7 +50,7 @@ public class Option_17986494_Sepulveda {
         return flowCodeLink;
     }
 
-    public List<String> getKeywords() {
+    public ArrayList<String> getKeywords() {
         return keywords;
     }    
     
@@ -76,7 +71,7 @@ public class Option_17986494_Sepulveda {
         this.flowCodeLink = flowCodeLink;
     }
 
-    public void setKeywords(List<String> keywords) {
+    public void setKeywords(ArrayList<String> keywords) {
         this.keywords = keywords;
     }
 }
