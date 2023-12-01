@@ -5,9 +5,11 @@
 package lab3_17986494_Sepulveda;
 
 import java.util.ArrayList;
+import java.util.Random;
+import lab3_17986494_Sepulveda.NormalUser_17986494_Sepulveda;
 
 /**
- *
+ *Clase para Sistema. Contiene el conjunto de chatbots asociados a un sistema, con los métodos necesarios para interactuar con ellos y para gestionar usuarios.
  * @author nic_s
  */
 public class System_17986494_Sepulveda {
@@ -24,8 +26,9 @@ public class System_17986494_Sepulveda {
         this.chatbotCodeLink = 0;
         this.chatbots = new ArrayList<>();
         this.users = new ArrayList<>();
-        logState = false;
-        logAdmin = false;
+        this.logState = false;
+        this.logAdmin = false;
+        this.loggedUser ="";
     }
     
     public void addChatbotToSystem(Chatbot_17986494_Sepulveda chatbot){
@@ -45,6 +48,13 @@ public class System_17986494_Sepulveda {
         }
         this.users.add(user);
     }
+
+/**
+ * Método para iniciar sesión.
+ * @throws IllegalStateException si se intenta iniciar sesión cuando ya hay una iniciada
+ * @throws IllegalArgumentException si el usuario que intenta iniciar sesión no está registrado en el sistema
+ * @param user usuario que intenta iniciar sesión
+ */
     
     public void login(User_17986494_Sepulveda user){
         if (this.isLogState()){
@@ -52,6 +62,7 @@ public class System_17986494_Sepulveda {
         }
         if (userInSystem(user)){
             this.setLogState(true);
+            this.setLoggedUser(user.getUsername());
             
         }else{
             throw new IllegalArgumentException("El usuario que intenta iniciar sesión no está registrado en el sistema.");
@@ -66,13 +77,31 @@ public class System_17986494_Sepulveda {
         }
         return false;
     }
-        
+       
+    public void logout(){
+        if (this.isLogState()){
+            this.setLogState(false);
+            this.setLogAdmin(false);
+            this.setLoggedUser("");
+        }else{
+            throw new IllegalStateException("No hay sesión iniciada en el sistema.");
+        }
+    }
+    
+    public String simulate(int maxInter, int seed){
+        String fakeUser = "user" + Integer.toString(seed);
+        NormalUser_17986494_Sepulveda user = new NormalUser_17986494_Sepulveda(fakeUser);
+        this.addUser(user);
+        Random random = new Random(seed);
+        return fakeUser;
+    }
+     
+    public String synthesis(User_17986494_Sepulveda user){
+        return user.getUsername();
+    }
+    
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public int getChatbotCodeLink() {
@@ -95,16 +124,8 @@ public class System_17986494_Sepulveda {
         return chatbots;
     }
 
-    public void setChatbots(ArrayList<Chatbot_17986494_Sepulveda> chatbots) {
-        this.chatbots = chatbots;
-    }
-
     public ArrayList<User_17986494_Sepulveda> getUsers() {
         return users;
-    }
-
-    public void setUsers(ArrayList<User_17986494_Sepulveda> users) {
-        this.users = users;
     }
 
     public boolean isLogState() {
@@ -119,7 +140,7 @@ public class System_17986494_Sepulveda {
         return logAdmin;
     }
 
-    public void setlogAdmin(boolean logAdmin) {
+    public void setLogAdmin(boolean logAdmin) {
         this.logAdmin = logAdmin;
     }    
     
@@ -130,6 +151,5 @@ public class System_17986494_Sepulveda {
     public void setLoggedUser(String loggedUser) {
         this.loggedUser = loggedUser;
     }
-    
     
 }

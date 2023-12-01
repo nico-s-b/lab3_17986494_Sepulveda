@@ -15,7 +15,18 @@ public class Flow_17986494_Sepulveda {
     private String nameMessage;
     private ArrayList<Option_17986494_Sepulveda> options;
 
+    public Flow_17986494_Sepulveda(){
+        this.options = new ArrayList<>();
+    }
     
+    public void addOptionToFLow(Option_17986494_Sepulveda option){
+        for (Option_17986494_Sepulveda op : this.options){
+            if (op.getCode() == option.getCode()){
+                throw new IllegalArgumentException("Ya existe una opción con el mismo código en el flujo.");
+            }
+        }
+        this.options.add(option);
+    }
     
     public int getId() {
         return id;

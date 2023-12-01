@@ -10,4 +10,9 @@ package lab3_17986494_Sepulveda;
  */
 public class NormalUser_17986494_Sepulveda extends User_17986494_Sepulveda {
     
+    NormalUser_17986494_Sepulveda(String user){
+        super(user);
+        this.setAdmin(false);
+    }
+    
 }

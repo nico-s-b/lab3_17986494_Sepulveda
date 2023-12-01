@@ -30,9 +30,7 @@ public class Option_17986494_Sepulveda {
             this.keywords.add(keyword);
         }
     }
-    
-    
-    
+     
     //Getters
     public int getCode() {
         return code;
@@ -69,9 +67,5 @@ public class Option_17986494_Sepulveda {
 
     public void setFlowCodeLink(int flowCodeLink) {
         this.flowCodeLink = flowCodeLink;
-    }
-
-    public void setKeywords(ArrayList<String> keywords) {
-        this.keywords = keywords;
     }
 }
