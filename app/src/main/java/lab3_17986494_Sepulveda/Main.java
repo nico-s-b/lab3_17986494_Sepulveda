@@ -3,126 +3,281 @@
  */
 package lab3_17986494_Sepulveda;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
-import lab3_17986494_Sepulveda.System_17986494_Sepulveda;
+
+//import lab3_17986494_Sepulveda.System_17986494_Sepulveda;
 
 public class Main {
     public static void main(String[] args) {        
         System_17986494_Sepulveda mySystem = new System_17986494_Sepulveda();
         
-        firstMenu(mySystem);
-        menuAdmin(mySystem);
+        menuFirst(mySystem);
         
     }
     
-    private static void printFirstMenu() {
-        System.out.println("Bienvenido al sistema de Chatbots!\n");
-        System.out.print("1. Registre al usuario administrador \n");
-        System.out.print("2. Salir\n");
-        System.out.print("\nIngrese opcion: ");
-    }
-
-    private static void firstMenu(System_17986494_Sepulveda sys){
+    private static void menuFirst(System_17986494_Sepulveda sys){
         Scanner input = new Scanner(System.in);
         int MENU_EXIT_OPTION = 2;
         int choice;
         do {
-            printFirstMenu();
-            choice = input.nextInt();
+            Menus_17986494_Sepulveda.printMenuFirst();
 
-            switch (choice) {
-                case 1:
-                    Scanner myObj = new Scanner(System.in); 
-                    System.out.println("Ingrese nombre de usuario administrador: ");
-                    String userName = myObj.nextLine();  // Read user input
-                    sys.registerUser(userName, true);
-                    break;
-
-                case 2:
-                    System.out.println("Ok! Muchas gracias por usar nuestro sistema");
-                    System.exit(0);
-                    break;
-                default:
-                    System.out.println(choice + " No es una opción válida! Por favor inténtelo de nuevo.");
-            }
+            do {
+                try {
+                    choice = input.nextInt();
+                    switch (choice) {
+                        case 1:
+                            Scanner myObj = new Scanner(System.in); 
+                            System.out.println("Ingrese nombre de usuario administrador: ");
+                            String userName = myObj.nextLine();
+                            sys.registerUser(userName, true);
+                            sys.login(sys.getAdmin());
+                            menuAdmin(sys);
+                            break;
+                        case 2:
+                            System.out.println("Ok! Muchas gracias por usar nuestro sistema");
+                            System.exit(0);
+                            break;
+                        default:
+                            System.out.println(choice + " No es una opción válida! Por favor inténtelo de nuevo.");
+                            System.out.print("\nIngrese opcion: ");
+                    }
+                } catch (InputMismatchException e) {
+                    System.out.println("Recuerde ingresar opciones numéricas. Por favor inténtelo de nuevo.");
+                    System.out.print("\nIngrese opcion: ");
+                    input.nextLine();
+                }
+            } while (true); // Continuar hasta que se ingrese una entrada válida
         } while (choice != MENU_EXIT_OPTION);   
     }
+
     
     private static void menuAdmin(System_17986494_Sepulveda sys){
         Scanner input = new Scanner(System.in);
-        int MENU_EXIT_OPTION = 5;
+        int MENU_EXIT_OPTION = 7;
         int choice;
-        do {    
-            printMenuAdmin();
-            choice = input.nextInt();
-            switch (choice){
-                case 1:
-                    
-                    break;
-                case 2:
-                    
-                    break;
-                
-                case 3:
-                    menuInteract(sys);
-                    break;
-                
-                case 4:
-                    
-                    break;
-                case 5:
-                    System.out.println("Ok! Muchas gracias por usar nuestro sistema");
-                    System.exit(0);
-                    break;
-                default:
-                    System.out.println(choice + " No es una opción válida! Por favor inténtelo de nuevo.");                
-            }
+        do {
+            Menus_17986494_Sepulveda.printMenuAdmin();
+            do{
+                try{
+                    choice = input.nextInt();
+                    switch (choice){
+                        case 1:
+                            menuCrear(sys);              //Menu para crear componentes nuevos
+                            break;
+                        case 2:
+                            menuModificar(sys);          //Menu para modificar componentes existentes
+                            break;
+                        case 3:
+                            menuInteract(sys,true);//Menu para interactuar con chatbots
+                            break;
+                        case 4:
+                            //Registrar un usuario nuevo
+                            Scanner myObj = new Scanner(System.in); 
+                            System.out.println("Ingrese nombre de nuevo usuario: ");
+                            String userName = myObj.nextLine();
+                            sys.registerUser(userName, false);
+                            break;
+                        case 5:
+                            System.out.println("\nListado de usuarios registrados: \n");
+                            sys.registeredUsers();  //Mostrar usuarios registrados
+                            System.out.println("");
+                            break;
+                        case 6:
+                            sys.logout();           //Cerrar sesión
+                            System.out.println("Ok! Cerrando sesión...\n");
+                            menuMain(sys);
+                            break;
+                        case 7:
+                            System.out.println("Ok! Muchas gracias por usar nuestro sistema");
+                            System.exit(0);
+                            break;
+                        default:
+                            System.out.println(choice + " No es una opción válida! Por favor inténtelo de nuevo.");  
+                            System.out.print("\nIngrese opcion: ");
+                    }
+                }catch(InputMismatchException  e){
+                    System.out.println("Recuerde ingresar opciones numéricas. Por favor inténtelo de nuevo."); 
+                    System.out.print("\nIngrese opcion: ");
+                    input.nextLine();
+                }
+            }while (true);       
         } while (choice != MENU_EXIT_OPTION);   
     }
-    
-    private static void printMenuAdmin() {
-        System.out.println("Bienvenido, Administrador!\n");
-        System.out.print("1. Crear componentes del sistema\n");
-        System.out.print("2. Modificar componentes del sistema\n");
-        System.out.print("3. Interactuar con el sistema\n");
-        System.out.print("4. Gestionar usuarios\n");
-        System.out.print("5. Salir\n");
-        System.out.print("\nIngrese opcion: ");
+
+    private static void menuMain(System_17986494_Sepulveda sys){
+        Scanner input = new Scanner(System.in);
+        int MENU_EXIT_OPTION = 2;
+        int choice;
+        do {    
+            Menus_17986494_Sepulveda.printMenuMain();
+
+            do {
+                try {
+                    choice = input.nextInt();
+                    switch (choice){
+                         //Iniciar sesión
+                         case 1:
+                             Scanner myObj = new Scanner(System.in); 
+                             System.out.println("Ingrese nombre de usuario: ");
+                             String userName = myObj.nextLine();
+                             sys.login(sys.getUser(userName));
+                             //Dependiendo si inicia sesión el administrador o un usuario
+                             //Se deriva a menus distintos
+                             if (sys.isLogAdmin()){
+                                 menuAdmin(sys);
+                             }else{
+                                 menuInteract(sys,false);
+                             }
+                             break;
+                         //Salir
+                         case 2:
+                             System.out.println("Ok! Muchas gracias por usar nuestro sistema");
+                             System.exit(0);
+                             break;
+                         default:
+                             System.out.println(choice + " No es una opción válida! Por favor inténtelo de nuevo.");     
+                             System.out.print("\nIngrese opcion: ");
+                     }
+                } catch (InputMismatchException e) {
+                    System.out.println("Recuerde ingresar opciones numéricas. Por favor inténtelo de nuevo.");
+                    System.out.print("\nIngrese opcion: ");
+                    input.nextLine();
+                }
+            } while (true); // Continuar hasta que se ingrese una entrada válida
+        } while (choice != MENU_EXIT_OPTION);   
     }
-    private static void menuInteract(System_17986494_Sepulveda sys){
+       
+    private static void menuInteract(System_17986494_Sepulveda sys,boolean isAdmin){
         Scanner input = new Scanner(System.in);
         int MENU_EXIT_OPTION = 4;
         int choice;
+        int maxInters;
+        boolean returnToPrevMenu = false;
         do {    
-            printMenuInteract();
-            choice = input.nextInt();
-            switch (choice){
-                case 1:
-                    
-                    break;
-                case 2:
-                    
-                    break;
-                
-                case 3:
-                    
-                    break;
-                
-                case 5:
-                    System.out.println("Ok! Muchas gracias por usar nuestro sistema");
-                    System.exit(0);
-                    break;
-                default:
-                    System.out.println(choice + " No es una opción válida! Por favor inténtelo de nuevo.");                
-            }
-        } while (choice != MENU_EXIT_OPTION);   
+            Menus_17986494_Sepulveda.printMenuInteract(isAdmin);
+            do {
+                try {
+                    choice = input.nextInt();
+                    switch (choice) {
+                        //Conversación
+                        case 1:                            
+                            System.out.print("1. Iniciar una conversación\n");
+                            break;
+                        //Simulacion
+                        case 2:    
+                            System.out.print("Ingrese el número máximo de interacciones deseadas: ");
+                            Scanner input2 = new Scanner(System.in);                   
+                            maxInters = input2.nextInt();
+                            break;
+                        //Sintesis
+                        case 3:
+                            System.out.print("3. Solicitar síntesis de mis conversaciones\n");
+                            break;
+                        case 4:
+                            //Si el menu es visto por un usuario normal, esta opción cierra sesión
+                            //para volver a menuMain()
+                            if (!isAdmin){
+                                sys.logout();
+                            }
+                            //Por otro lado, si es admin, con esta opción volverá a menuAdmin()
+                            returnToPrevMenu = true;
+                            break;
+                        default:
+                            System.out.println(choice + " No es una opción válida! Por favor inténtelo de nuevo.");      
+                            System.out.print("\nIngrese opcion: ");
+                    }
+                } catch (InputMismatchException e) {
+                    System.out.println("Recuerde ingresar opciones numéricas. Por favor inténtelo de nuevo.");
+                    System.out.print("\nIngrese opcion: ");
+                    input.nextLine();
+                }
+            } while (true); // Continuar hasta que se ingrese una entrada válida            
+        } while (choice != MENU_EXIT_OPTION && !returnToPrevMenu);
     }
-    private static void printMenuInteract(){
-        System.out.println("¿Qué deseas hacer?\n");
-        System.out.print("1. Iniciar una conversación\n");
-        System.out.print("2. Solicitar una simulación\n");
-        System.out.print("3. Solicitar síntesis de mis conversaciones\n");
-        System.out.print("4. Salir\n");
-        System.out.print("\nIngrese opcion: ");
+
+    private static void menuCrear(System_17986494_Sepulveda sys){
+        Scanner input = new Scanner(System.in);
+        int MENU_EXIT_OPTION = 4;
+        int choice;
+        boolean returnToPrevMenu = false;
+        do {    
+            Menus_17986494_Sepulveda.printMenuCrear();            
+            do {
+                try {
+                    choice = input.nextInt();
+                    switch (choice){
+                        case 1:
+                            //Creación de chatbots. Difiere si es el primer chatbot o ya existen más en el sistema
+                            if (sys.getChatbots().isEmpty()){
+                                MenusComponentes_17986494_Sepulveda.menuCrearChatbot(sys,true);
+                            }else{
+                                MenusComponentes_17986494_Sepulveda.menuCrearChatbot(sys,false);
+                            }
+                            break;
+                        case 2:
+                            //MenusComponentes_17986494_Sepulveda.menuCrearFlow();
+                            break;
+                        case 3:
+                            //MenusComponentes_17986494_Sepulveda.menuCrearOpcion();
+                            break;
+                        case 4:
+                            returnToPrevMenu = true;
+                            break;
+                        default:
+                            System.out.println(choice + " No es una opción válida! Por favor inténtelo de nuevo.");     
+                            System.out.print("\nIngrese opcion: ");
+                    }
+                } catch (InputMismatchException e) {
+                    System.out.println("Recuerde ingresar opciones numéricas. Por favor inténtelo de nuevo.");
+                    System.out.print("\nIngrese opcion: ");
+                    input.nextLine();
+                }
+            } while (true); // Continuar hasta que se ingrese una entrada válida
+        } while (choice != MENU_EXIT_OPTION && !returnToPrevMenu);
     }
+
+    private static void menuModificar(System_17986494_Sepulveda sys){
+             Scanner input = new Scanner(System.in);
+        int MENU_EXIT_OPTION = 4;
+        int choice;
+        boolean returnToPrevMenu = false;
+        do {    
+            Menus_17986494_Sepulveda.printMenuModificar();            
+            do {
+                try {
+                    choice = input.nextInt();
+                    switch (choice){
+                        case 1:
+                            //Creación de chatbots. Difiere si es el primer chatbot o ya existen más en el sistema
+                            if (sys.getChatbots().isEmpty()){
+                                System.out.print("No hay chatbots que modificar!");
+                                returnToPrevMenu = true;
+                            }else{
+                                //MenusComponentes_17986494_Sepulveda.menuModificarChatbot(sys);
+                            }
+                            break;
+                        case 2:
+                            //MenusComponentes_17986494_Sepulveda.menuModificarFlow();
+                            break;
+                        case 3:
+                            //MenusComponentes_17986494_Sepulveda.menuModificarOpcion();
+                            break;
+                        case 4:
+                            returnToPrevMenu = true;
+                            break;
+                        default:
+                            System.out.println(choice + " No es una opción válida! Por favor inténtelo de nuevo.");     
+                            System.out.print("\nIngrese opcion: ");
+                    }
+                } catch (InputMismatchException e) {
+                    System.out.println("Recuerde ingresar opciones numéricas. Por favor inténtelo de nuevo.");
+                    System.out.print("\nIngrese opcion: ");
+                    input.nextLine();
+                }
+            } while (true); // Continuar hasta que se ingrese una entrada válida
+        } while (choice != MENU_EXIT_OPTION && !returnToPrevMenu);
+    }
+
 }

@@ -20,6 +20,11 @@ public abstract class User_17986494_Sepulveda {
         this.username = username;
         this.chatHistory = new ArrayList<>();
     }
+
+    @Override
+    public String toString() {
+        return this.getUsername();
+    }
  
 
     

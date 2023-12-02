@@ -12,7 +12,7 @@ import java.util.ArrayList;
  */
 public class Chatbot_17986494_Sepulveda {
     private int id;
-    private String namem;
+    private String name;
     private String welcomeMessage;
     private int startFlowId;
     private ArrayList<Flow_17986494_Sepulveda> flows;
@@ -38,12 +38,12 @@ public class Chatbot_17986494_Sepulveda {
         this.id = id;
     }
 
-    public String getNamem() {
-        return namem;
+    public String getName() {
+        return name;
     }
 
-    public void setNamem(String namem) {
-        this.namem = namem;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getWelcomeMessage() {
@@ -64,11 +64,5 @@ public class Chatbot_17986494_Sepulveda {
 
     public ArrayList<Flow_17986494_Sepulveda> getFlows() {
         return flows;
-    }
-
-    public void setFlows(ArrayList<Flow_17986494_Sepulveda> flows) {
-        this.flows = flows;
-    }
-    
-    
+    } 
 }

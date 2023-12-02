@@ -33,12 +33,12 @@ public class System_17986494_Sepulveda {
     }
     
     public void addChatbotToSystem(Chatbot_17986494_Sepulveda chatbot){
-        for (Chatbot_17986494_Sepulveda cb : this.chatbots){
+        for (Chatbot_17986494_Sepulveda cb : this.getChatbots()){
             if (cb.getId() == chatbot.getId()){
                 throw new IllegalArgumentException("Ya existe un chatbot con el mismo código en el sistema.");
             }
         }
-        this.chatbots.add(chatbot);
+        this.getChatbots().add(chatbot);
     }    
     
     public void registerUser(String username, boolean isAdmin){
@@ -52,12 +52,12 @@ public class System_17986494_Sepulveda {
     }
     
     private void addUser(User_17986494_Sepulveda user){
-        for (User_17986494_Sepulveda us : this.users){
+        for (User_17986494_Sepulveda us : this.getUsers()){
             if (us.getUsername().equals(user.getUsername())){
                 throw new IllegalArgumentException("Ya existe un usuario con el mismo nombre en el sistema.");
             }
         }
-        this.users.add(user);
+        this.getUsers().add(user);
     }
 
 /**
@@ -74,6 +74,9 @@ public class System_17986494_Sepulveda {
         if (userInSystem(user)){
             this.setLogState(true);
             this.setLoggedUser(user.getUsername());
+            if (user.isAdmin()){
+                this.setLogAdmin(true);
+            }
             
         }else{
             throw new IllegalArgumentException("El usuario que intenta iniciar sesión no está registrado en el sistema.");
@@ -81,7 +84,7 @@ public class System_17986494_Sepulveda {
     }
     
     private boolean userInSystem(User_17986494_Sepulveda user){
-        for (User_17986494_Sepulveda us : this.users){
+        for (User_17986494_Sepulveda us : this.getUsers()){
             if (us.getUsername().equals(user.getUsername())){
                 return true;
             }
@@ -159,6 +162,31 @@ public class System_17986494_Sepulveda {
         return loggedUser;
     }
 
+    public User_17986494_Sepulveda getAdmin(){
+        for (User_17986494_Sepulveda us : this.getUsers()){
+            if (us.isAdmin()){
+                return us;
+            }
+        }
+        return null;
+    }
+    
+    public User_17986494_Sepulveda getUser(String username){
+        for (User_17986494_Sepulveda us : this.getUsers()){
+            if (us.getUsername().equals(username) ){
+                return us;
+            }
+        }
+        return null;
+    }
+    
+    public void registeredUsers(){
+        for (User_17986494_Sepulveda us : this.getUsers()){
+            System.out.print(us);
+            System.out.print("\n");
+        }
+    }
+    
     public void setLoggedUser(String loggedUser) {
         this.loggedUser = loggedUser;
     }
