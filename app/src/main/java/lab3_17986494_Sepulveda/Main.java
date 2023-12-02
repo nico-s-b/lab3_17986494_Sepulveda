@@ -4,60 +4,125 @@
 package lab3_17986494_Sepulveda;
 
 import java.util.Scanner;
+import lab3_17986494_Sepulveda.System_17986494_Sepulveda;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) {        
+        System_17986494_Sepulveda mySystem = new System_17986494_Sepulveda();
+        
+        firstMenu(mySystem);
+        menuAdmin(mySystem);
+        
+    }
+    
+    private static void printFirstMenu() {
+        System.out.println("Bienvenido al sistema de Chatbots!\n");
+        System.out.print("1. Registre al usuario administrador \n");
+        System.out.print("2. Salir\n");
+        System.out.print("\nIngrese opcion: ");
+    }
+
+    private static void firstMenu(System_17986494_Sepulveda sys){
         Scanner input = new Scanner(System.in);
-        final int MENU_EXIT_OPTION = 5;
-
+        int MENU_EXIT_OPTION = 2;
         int choice;
-
         do {
-            printMenu();
+            printFirstMenu();
             choice = input.nextInt();
 
             switch (choice) {
-
                 case 1:
-                    //do something
+                    Scanner myObj = new Scanner(System.in); 
+                    System.out.println("Ingrese nombre de usuario administrador: ");
+                    String userName = myObj.nextLine();  // Read user input
+                    sys.registerUser(userName, true);
                     break;
 
                 case 2:
-                    //do something
-                    break;
-
-                case 3:
-                    System.out.println("Sum 2 numbers");
-                    System.out.println("Ingrese un número int y luego presione ENTER:");
-                    var n1 = input.nextInt();
-                    System.out.println("Ingrese otro número int y luego presione ENTER:");
-                    var n2 = input.nextInt();
-                    int sum = n1 + n2;
-                    System.out.println("La suma es: " + sum);
-                    break;
-
-                case 4:
-                    //do something
-                    break;
-
-                case 5:
-                    System.out.println("Bye.. Que la Fuerza te acompañe");
+                    System.out.println("Ok! Muchas gracias por usar nuestro sistema");
                     System.exit(0);
                     break;
                 default:
-                    System.out.println(choice + " is not a valid option! Please select correct option.");
-
+                    System.out.println(choice + " No es una opción válida! Por favor inténtelo de nuevo.");
             }
-        } while (choice != MENU_EXIT_OPTION);
+        } while (choice != MENU_EXIT_OPTION);   
     }
-
-    private static void printMenu() {
-        System.out.println("Main Menu\n");
-        System.out.print("1. Create something \n");
-        System.out.print("2. Modify something.\n");
-        System.out.print("3. Sum 2 numbers.\n");
-        System.out.print("4. Some option.\n");
-        System.out.print("5. Exit\n");
-        System.out.print("\nEnter your choice: ");
+    
+    private static void menuAdmin(System_17986494_Sepulveda sys){
+        Scanner input = new Scanner(System.in);
+        int MENU_EXIT_OPTION = 5;
+        int choice;
+        do {    
+            printMenuAdmin();
+            choice = input.nextInt();
+            switch (choice){
+                case 1:
+                    
+                    break;
+                case 2:
+                    
+                    break;
+                
+                case 3:
+                    menuInteract(sys);
+                    break;
+                
+                case 4:
+                    
+                    break;
+                case 5:
+                    System.out.println("Ok! Muchas gracias por usar nuestro sistema");
+                    System.exit(0);
+                    break;
+                default:
+                    System.out.println(choice + " No es una opción válida! Por favor inténtelo de nuevo.");                
+            }
+        } while (choice != MENU_EXIT_OPTION);   
+    }
+    
+    private static void printMenuAdmin() {
+        System.out.println("Bienvenido, Administrador!\n");
+        System.out.print("1. Crear componentes del sistema\n");
+        System.out.print("2. Modificar componentes del sistema\n");
+        System.out.print("3. Interactuar con el sistema\n");
+        System.out.print("4. Gestionar usuarios\n");
+        System.out.print("5. Salir\n");
+        System.out.print("\nIngrese opcion: ");
+    }
+    private static void menuInteract(System_17986494_Sepulveda sys){
+        Scanner input = new Scanner(System.in);
+        int MENU_EXIT_OPTION = 4;
+        int choice;
+        do {    
+            printMenuInteract();
+            choice = input.nextInt();
+            switch (choice){
+                case 1:
+                    
+                    break;
+                case 2:
+                    
+                    break;
+                
+                case 3:
+                    
+                    break;
+                
+                case 5:
+                    System.out.println("Ok! Muchas gracias por usar nuestro sistema");
+                    System.exit(0);
+                    break;
+                default:
+                    System.out.println(choice + " No es una opción válida! Por favor inténtelo de nuevo.");                
+            }
+        } while (choice != MENU_EXIT_OPTION);   
+    }
+    private static void printMenuInteract(){
+        System.out.println("¿Qué deseas hacer?\n");
+        System.out.print("1. Iniciar una conversación\n");
+        System.out.print("2. Solicitar una simulación\n");
+        System.out.print("3. Solicitar síntesis de mis conversaciones\n");
+        System.out.print("4. Salir\n");
+        System.out.print("\nIngrese opcion: ");
     }
 }

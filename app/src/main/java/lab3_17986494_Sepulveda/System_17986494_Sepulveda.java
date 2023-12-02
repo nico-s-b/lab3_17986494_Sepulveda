@@ -7,6 +7,7 @@ package lab3_17986494_Sepulveda;
 import java.util.ArrayList;
 import java.util.Random;
 import lab3_17986494_Sepulveda.NormalUser_17986494_Sepulveda;
+import lab3_17986494_Sepulveda.AdminUser_17986494_Sepulveda;
 
 /**
  *Clase para Sistema. Contiene el conjunto de chatbots asociados a un sistema, con los métodos necesarios para interactuar con ellos y para gestionar usuarios.
@@ -40,7 +41,17 @@ public class System_17986494_Sepulveda {
         this.chatbots.add(chatbot);
     }    
     
-    public void addUser(User_17986494_Sepulveda user){
+    public void registerUser(String username, boolean isAdmin){
+        User_17986494_Sepulveda user;
+        if (isAdmin){
+            user = new AdminUser_17986494_Sepulveda(username);
+        }else{
+            user = new NormalUser_17986494_Sepulveda(username);
+        }
+        this.addUser(user);
+    }
+    
+    private void addUser(User_17986494_Sepulveda user){
         for (User_17986494_Sepulveda us : this.users){
             if (us.getUsername().equals(user.getUsername())){
                 throw new IllegalArgumentException("Ya existe un usuario con el mismo nombre en el sistema.");
