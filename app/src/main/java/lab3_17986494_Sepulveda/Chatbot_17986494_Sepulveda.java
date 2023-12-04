@@ -10,8 +10,8 @@ import java.util.ArrayList;
  *
  * @author nic_s
  */
-public class Chatbot_17986494_Sepulveda {
-    private int id;
+public class Chatbot_17986494_Sepulveda extends Componente_17986494_Sepulveda{
+    
     private String name;
     private String welcomeMessage;
     private int startFlowId;
@@ -20,22 +20,13 @@ public class Chatbot_17986494_Sepulveda {
     public Chatbot_17986494_Sepulveda(){
         this.flows = new ArrayList<>();
     }
-    
-    public void addFlowToChatbot(Flow_17986494_Sepulveda flow){
-        for (Flow_17986494_Sepulveda fl : this.flows){
-            if (fl.getId() == flow.getId()){
-                throw new IllegalArgumentException("Ya existe un flow con el mismo código en el chatbot.");
-            }
-        }
-        this.flows.add(flow);
-    }
-    
-    public int getId() {
-        return id;
-    }
 
-    public void setId(int id) {
-        this.id = id;
+    public void addFlowToChatbot(Flow_17986494_Sepulveda flow){
+        try{
+            Componente_17986494_Sepulveda.addComponent(this.getFlows(), flow);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
     }
 
     public String getName() {

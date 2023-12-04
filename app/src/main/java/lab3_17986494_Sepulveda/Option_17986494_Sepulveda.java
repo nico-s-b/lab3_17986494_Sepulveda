@@ -10,10 +10,9 @@ import java.util.ArrayList;
  *
  * @author nic_s
  */
-public class Option_17986494_Sepulveda {
+public class Option_17986494_Sepulveda extends Componente_17986494_Sepulveda{
 
     //Atributos de clase
-    private int code;
     private String message;
     private int chatbotCodeLink;
     private int flowCodeLink;
@@ -32,9 +31,6 @@ public class Option_17986494_Sepulveda {
     }
      
     //Getters
-    public int getCode() {
-        return code;
-    }
 
     public String getMessage() {
         return message;
@@ -53,9 +49,6 @@ public class Option_17986494_Sepulveda {
     }    
     
     //Setters
-    public void setCode(int code) {
-        this.code = code;
-    }
 
     public void setMessage(String message) {
         this.message = message;

@@ -6,8 +6,6 @@ package lab3_17986494_Sepulveda;
 
 import java.util.ArrayList;
 import java.util.Random;
-import lab3_17986494_Sepulveda.NormalUser_17986494_Sepulveda;
-import lab3_17986494_Sepulveda.AdminUser_17986494_Sepulveda;
 
 /**
  *Clase para Sistema. Contiene el conjunto de chatbots asociados a un sistema, con los métodos necesarios para interactuar con ellos y para gestionar usuarios.
@@ -22,6 +20,7 @@ public class System_17986494_Sepulveda {
     private boolean logState;
     private boolean logAdmin;
     private String loggedUser;
+    private ArrayList<Componente_17986494_Sepulveda> waitingComponents;
 
     public System_17986494_Sepulveda(){
         this.chatbotCodeLink = 0;
@@ -30,16 +29,16 @@ public class System_17986494_Sepulveda {
         this.logState = false;
         this.logAdmin = false;
         this.loggedUser ="";
+        this.waitingComponents = new ArrayList<>();
     }
     
     public void addChatbotToSystem(Chatbot_17986494_Sepulveda chatbot){
-        for (Chatbot_17986494_Sepulveda cb : this.getChatbots()){
-            if (cb.getId() == chatbot.getId()){
-                throw new IllegalArgumentException("Ya existe un chatbot con el mismo código en el sistema.");
-            }
+        try{
+            Componente_17986494_Sepulveda.addComponent(this.getChatbots(), chatbot);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error: " + e.getMessage());
         }
-        this.getChatbots().add(chatbot);
-    }    
+    }
     
     public void registerUser(String username, boolean isAdmin){
         User_17986494_Sepulveda user;
@@ -49,6 +48,10 @@ public class System_17986494_Sepulveda {
             user = new NormalUser_17986494_Sepulveda(username);
         }
         this.addUser(user);
+    }
+    
+    public void addComponente(Componente_17986494_Sepulveda comp){
+        this.waitingComponents.add(comp);
     }
     
     private void addUser(User_17986494_Sepulveda user){

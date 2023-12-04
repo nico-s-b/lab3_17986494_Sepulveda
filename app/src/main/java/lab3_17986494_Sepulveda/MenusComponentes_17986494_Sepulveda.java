@@ -55,6 +55,8 @@ public class MenusComponentes_17986494_Sepulveda {
                 input.nextLine();  // Limpiar el búfer de entrada
             }
         }
+        sys.addComponente(chatbot);
+        
     }
 
     public static void menuCrearFlow(System_17986494_Sepulveda sys){
@@ -76,14 +78,9 @@ public class MenusComponentes_17986494_Sepulveda {
                 input.nextLine();  // Limpiar el búfer de entrada
             }
         }
+        sys.addComponente(flow);
+        
     }
-
-    /*//Atributos de clase
-    private int code;
-    private String message;
-    private int chatbotCodeLink;
-    private int flowCodeLink;
-    private ArrayList<String> keywords;*/
 
     public static void menuCrearOption(System_17986494_Sepulveda sys){
         Option_17986494_Sepulveda option = new Option_17986494_Sepulveda();
@@ -97,7 +94,7 @@ public class MenusComponentes_17986494_Sepulveda {
         while (true) {
             try {
                 System.out.print("2. Ingrese Código de la Opción: ");
-                option.setCode(input.nextInt());
+                option.setId(input.nextInt());
                 break;  // Salir del bucle si la entrada es válida
             } catch (InputMismatchException e) {
                 System.out.println("Recuerde ingresar opciones numéricas. Por favor inténtelo de nuevo.");
@@ -127,8 +124,17 @@ public class MenusComponentes_17986494_Sepulveda {
             }
         }
         
+        System.out.print("5. Ingrese las palabras claves que tendrá la Opción: \nIngrese 0 si ya terminó de agregar palabras\n");
+        String MENU_EXIT_OPTION = "0";
+        String keyword;
+        int num = 1;
+        do{
+            keyword = input.nextLine();
+            System.out.print("Ingrese palabra clave N°"+Integer.toString(num)+": ");
+            option.addKeyword(keyword);
+            num++;
+        }while (keyword.equals(MENU_EXIT_OPTION));
         
-        
+        sys.addComponente(option);
     }
-    
 }    
