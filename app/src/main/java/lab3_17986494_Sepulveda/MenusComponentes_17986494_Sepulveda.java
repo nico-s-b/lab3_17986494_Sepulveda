@@ -4,6 +4,7 @@
  */
 package lab3_17986494_Sepulveda;
 
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -44,7 +45,7 @@ public class MenusComponentes_17986494_Sepulveda {
                 }
             }            
         }
-
+        
         while (true) {
             try {
                 System.out.print("4. Ingrese Código de Flujo inicial del Chatbot: ");
@@ -55,6 +56,8 @@ public class MenusComponentes_17986494_Sepulveda {
                 input.nextLine();  // Limpiar el búfer de entrada
             }
         }
+        
+        
         sys.addComponente(chatbot);
         
     }
@@ -78,6 +81,7 @@ public class MenusComponentes_17986494_Sepulveda {
                 input.nextLine();  // Limpiar el búfer de entrada
             }
         }
+        ArrayList<Flow_17986494_Sepulveda> flows = Componente_17986494_Sepulveda.<Flow_17986494_Sepulveda>filterComponent(sys.getComponentes(), Flow_17986494_Sepulveda.class);
         sys.addComponente(flow);
         
     }

@@ -217,10 +217,10 @@ public class Main {
                             }
                             break;
                         case 2:
-                            //MenusComponentes_17986494_Sepulveda.menuCrearFlow();
+                            MenusComponentes_17986494_Sepulveda.menuCrearFlow(sys);
                             break;
                         case 3:
-                            //MenusComponentes_17986494_Sepulveda.menuCrearOpcion();
+                            MenusComponentes_17986494_Sepulveda.menuCrearOption(sys);
                             break;
                         case 4:
                             returnToPrevMenu = true;
@@ -239,7 +239,7 @@ public class Main {
     }
 
     private static void menuModificar(System_17986494_Sepulveda sys){
-             Scanner input = new Scanner(System.in);
+        Scanner input = new Scanner(System.in);
         int MENU_EXIT_OPTION = 4;
         int choice;
         boolean returnToPrevMenu = false;
@@ -259,10 +259,10 @@ public class Main {
                             }
                             break;
                         case 2:
-                            //MenusComponentes_17986494_Sepulveda.menuModificarFlow();
+                            //MenusComponentes_17986494_Sepulveda.menuModificarFlow(sys);
                             break;
                         case 3:
-                            //MenusComponentes_17986494_Sepulveda.menuModificarOpcion();
+                            //MenusComponentes_17986494_Sepulveda.menuModificarOption(sys);
                             break;
                         case 4:
                             returnToPrevMenu = true;

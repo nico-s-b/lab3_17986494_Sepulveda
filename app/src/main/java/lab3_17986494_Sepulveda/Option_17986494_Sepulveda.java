@@ -7,29 +7,47 @@ package lab3_17986494_Sepulveda;
 import java.util.ArrayList;
 
 /**
- *
+ * Clase Option, para objetos que serán opciones de un flujo de un chatbot. Las
+ * opciones tienen un identificador único dentro de un flujo, y enlazan con un
+ * chatbot en particular y con uno de los flujos que pertenecen a este. La opción
+ * puede ser seleccionada por su Id o mediante alguna palabra clave contenida en
+ * las keywords. Hereda de la clase {@link Componente_17986494_Sepulveda}
  * @author nic_s
  */
 public class Option_17986494_Sepulveda extends Componente_17986494_Sepulveda{
 
-    //Atributos de clase
     private String message;
     private int chatbotCodeLink;
     private int flowCodeLink;
     private ArrayList<String> keywords;
     
-    //Constructor por defecto
     public Option_17986494_Sepulveda(){
         this.keywords = new ArrayList<>();
     }
     
-    //Add keyword
+/**
+ * Método que añade palabras clave a la opción. Recibe strings, y verifica
+ * que éstas palabras no hayan sido añadidas previamente.
+ * @author nic_s
+ * 
+ * @param keyword
+ */
     public void addKeyword(String keyword){
-        if (keyword != null && !keywords.contains(keyword)){
-            this.keywords.add(keyword);
+        if (keyword != null && !this.getKeywords().contains(keyword)){
+            this.getKeywords().add(keyword);
         }
     }
-     
+    
+    @Override
+    public String toString(){
+        String atr1 = String.format("Op: %d | CbLink:%d FlLink %d | '%s'",this.getId(), this.getChatbotCodeLink(), this.getFlowCodeLink(), this.getMessage());
+        String atr2 = "Keywords: ";
+        for (String s: this.getKeywords()){
+            atr2 = atr2+s+" ";
+        }
+        return atr1+atr2;
+    }     
+    
     //Getters
 
     public String getMessage() {

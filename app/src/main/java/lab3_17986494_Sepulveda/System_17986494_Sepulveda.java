@@ -8,7 +8,8 @@ import java.util.ArrayList;
 import java.util.Random;
 
 /**
- *Clase para Sistema. Contiene el conjunto de chatbots asociados a un sistema, con los métodos necesarios para interactuar con ellos y para gestionar usuarios.
+ *Clase para Sistema. Contiene el conjunto de chatbots asociados a un sistema, 
+ * con los métodos necesarios para interactuar con ellos y para gestionar usuarios.
  * @author nic_s
  */
 public class System_17986494_Sepulveda {
@@ -31,7 +32,15 @@ public class System_17986494_Sepulveda {
         this.loggedUser ="";
         this.waitingComponents = new ArrayList<>();
     }
-    
+
+/**
+ * Método que añade un chatbot a un sistema, evitando añadir chatbots duplicados
+ * de acuerdo al Id de estas. Llama al método {@link Componente_17986494_Sepulveda#addComponent(java.util.ArrayList, lab3_17986494_Sepulveda.Componente_17986494_Sepulveda)}
+ * para realizar la acción. Captura el error lanzado por dicho método.
+ * @author nic_s
+ * 
+ * @param chatbot
+ */
     public void addChatbotToSystem(Chatbot_17986494_Sepulveda chatbot){
         try{
             Componente_17986494_Sepulveda.addComponent(this.getChatbots(), chatbot);
@@ -40,6 +49,15 @@ public class System_17986494_Sepulveda {
         }
     }
     
+/**
+ * Método para registrar usuarios nuevos al sistema.Recibe un nombre de usuario 
+ * y si éste tendrá o no privilegios de administrador.Crea un nuevo usuario
+ * y lo añade al sistema utilizando el método {@link #addUser(lab3_17986494_Sepulveda.User_17986494_Sepulveda)}
+ * @author nic_s
+ * 
+ * @param username
+ * @param isAdmin
+ */    
     public void registerUser(String username, boolean isAdmin){
         User_17986494_Sepulveda user;
         if (isAdmin){
@@ -49,11 +67,7 @@ public class System_17986494_Sepulveda {
         }
         this.addUser(user);
     }
-    
-    public void addComponente(Componente_17986494_Sepulveda comp){
-        this.waitingComponents.add(comp);
-    }
-    
+     
     private void addUser(User_17986494_Sepulveda user){
         for (User_17986494_Sepulveda us : this.getUsers()){
             if (us.getUsername().equals(user.getUsername())){
@@ -64,12 +78,14 @@ public class System_17986494_Sepulveda {
     }
 
 /**
- * Método para iniciar sesión.
+ * Método para iniciar sesión. Recibe un usuario como parámetro y verifica si
+ * es o no posible para este usuario iniciar la sesión.
  * @throws IllegalStateException si se intenta iniciar sesión cuando ya hay una iniciada
- * @throws IllegalArgumentException si el usuario que intenta iniciar sesión no está registrado en el sistema
- * @param user usuario que intenta iniciar sesión
+ * @throws IllegalArgumentException si el usuario que intenta iniciar sesión no 
+ * está registrado en el sistema
+ * 
+ * @param user
  */
-    
     public void login(User_17986494_Sepulveda user){
         if (this.isLogState()){
             throw new IllegalStateException("Ya existe una sesión iniciada en el sistema.");
@@ -116,54 +132,6 @@ public class System_17986494_Sepulveda {
     public String synthesis(User_17986494_Sepulveda user){
         return user.getUsername();
     }
-    
-    public String getName() {
-        return name;
-    }
-
-    public int getChatbotCodeLink() {
-        return chatbotCodeLink;
-    }
-
-    public void setChatbotCodeLink(int chatbotCodeLink) {
-        this.chatbotCodeLink = chatbotCodeLink;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public ArrayList<Chatbot_17986494_Sepulveda> getChatbots() {
-        return chatbots;
-    }
-
-    public ArrayList<User_17986494_Sepulveda> getUsers() {
-        return users;
-    }
-
-    public boolean isLogState() {
-        return logState;
-    }
-
-    public void setLogState(boolean logState) {
-        this.logState = logState;
-    }
-
-    public boolean isLogAdmin() {
-        return logAdmin;
-    }
-
-    public void setLogAdmin(boolean logAdmin) {
-        this.logAdmin = logAdmin;
-    }    
-    
-    public String getLoggedUser() {
-        return loggedUser;
-    }
 
     public User_17986494_Sepulveda getAdmin(){
         for (User_17986494_Sepulveda us : this.getUsers()){
@@ -189,7 +157,61 @@ public class System_17986494_Sepulveda {
             System.out.print("\n");
         }
     }
+
+    public void addComponente(Componente_17986494_Sepulveda comp){
+        this.waitingComponents.add(comp);
+    }
     
+    //Getters & Setters
+    
+    public String getName() {
+        return name;
+    }
+
+    public int getChatbotCodeLink() {
+        return chatbotCodeLink;
+    }
+
+    public void setChatbotCodeLink(int chatbotCodeLink) {
+        this.chatbotCodeLink = chatbotCodeLink;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public ArrayList<Chatbot_17986494_Sepulveda> getChatbots() {
+        return chatbots;
+    }
+
+    public ArrayList<User_17986494_Sepulveda> getUsers() {
+        return users;
+    }
+
+    public ArrayList<Componente_17986494_Sepulveda> getComponentes() {
+        return waitingComponents;
+    }
+    
+    public boolean isLogState() {
+        return logState;
+    }
+
+    public void setLogState(boolean logState) {
+        this.logState = logState;
+    }
+
+    public boolean isLogAdmin() {
+        return logAdmin;
+    }
+
+    public void setLogAdmin(boolean logAdmin) {
+        this.logAdmin = logAdmin;
+    }    
+    
+    public String getLoggedUser() {
+        return loggedUser;
+    }
+  
     public void setLoggedUser(String loggedUser) {
         this.loggedUser = loggedUser;
     }

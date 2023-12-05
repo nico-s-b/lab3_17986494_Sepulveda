@@ -45,6 +45,15 @@ public class Menus_17986494_Sepulveda {
         System.out.print("\nIngrese opcion: ");
     }        
 
+    public static void printMenu(){
+        System.out.println("¿Qué deseas hacer?\n");
+        System.out.print("1. Crear un nuevo chatbot\n");
+        System.out.print("2. Crear un nuevo flujo\n");
+        System.out.print("3. Crear una nueva opción\n");
+        System.out.print("4. Volver\n");
+        System.out.print("\nIngrese opcion: ");
+    }        
+    
     public static void printMenuModificar(){
         System.out.println("¿Qué deseas hacer?\n");
         System.out.print("1. Modificar un chatbot\n");
