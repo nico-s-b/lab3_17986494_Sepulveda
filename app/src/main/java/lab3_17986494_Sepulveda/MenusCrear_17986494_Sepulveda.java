@@ -12,7 +12,7 @@ import java.util.Scanner;
  *
  * @author nic_s
  */
-public class MenusComponentes_17986494_Sepulveda {
+public class MenusCrear_17986494_Sepulveda {
 
     public static void menuCrearChatbot(System_17986494_Sepulveda sys, boolean isFirst){
         Chatbot_17986494_Sepulveda chatbot = new Chatbot_17986494_Sepulveda();
@@ -56,10 +56,51 @@ public class MenusComponentes_17986494_Sepulveda {
                 input.nextLine();  // Limpiar el búfer de entrada
             }
         }
-        
-        
-        sys.addComponente(chatbot);
-        
+        ArrayList<Flow_17986494_Sepulveda> flows = Componente_17986494_Sepulveda.<Flow_17986494_Sepulveda>filterComponent(
+                                                    sys.getComponentes(), Flow_17986494_Sepulveda.class);        
+        if (flows.isEmpty()){
+            System.out.print("5. No hay flujos disponibles para agregar\n");
+            System.out.print("Se añadió el chatbot al sistema");
+            sys.addChatbotToSystem(chatbot);
+        }else{
+            System.out.print("5. Agregar flujos al chatbot\nListado de flujos disponibles para agregar: \n");
+            
+            for (Flow_17986494_Sepulveda f: flows){
+                f.toString();
+            }
+            do {
+                System.out.print("Ingrese Id del componente que desea agregar o escriba 'no' para terminar: ");
+                String userInput = input.nextLine().toLowerCase();
+                if(flows.isEmpty()){
+                    System.out.print("Ya no quedan comopnentes por agregar\n");
+                    break;
+                }
+                if (userInput.equals("no")) {
+                    break;
+                }
+                try {
+                    int Id = Integer.parseInt(userInput);
+                    chatbot.addFlowToChatbot(Componente_17986494_Sepulveda.getComponentById(flows, Id));
+                    Componente_17986494_Sepulveda.remComponentById(flows, Id);
+                } catch (NumberFormatException  e) {
+                    System.out.println("Recuerde ingresar opciones numéricas. Por favor inténtelo de nuevo.");
+
+                }                  
+            }while (true);
+            System.out.print("Este es su nuevo chatbot:\n");
+            chatbot.toString();
+            System.out.print("¿Añadir chatbot al sistema?\nIngrese 'si' para confirmar, 'no' para cancelar: ");
+            String userInput = input.nextLine().toLowerCase();
+            do {
+                if (userInput.equals("si")){
+                    sys.addChatbotToSystem(chatbot);
+                    System.out.print("Se añadió el chatbot al sistema");
+                }else{
+                    
+                }
+            }while ();
+
+        }       
     }
 
     public static void menuCrearFlow(System_17986494_Sepulveda sys){
@@ -81,9 +122,41 @@ public class MenusComponentes_17986494_Sepulveda {
                 input.nextLine();  // Limpiar el búfer de entrada
             }
         }
-        ArrayList<Flow_17986494_Sepulveda> flows = Componente_17986494_Sepulveda.<Flow_17986494_Sepulveda>filterComponent(sys.getComponentes(), Flow_17986494_Sepulveda.class);
-        sys.addComponente(flow);
-        
+        ArrayList<Option_17986494_Sepulveda> options = Componente_17986494_Sepulveda.<Option_17986494_Sepulveda>filterComponent(
+                                                    sys.getComponentes(), Option_17986494_Sepulveda.class);        
+        if (options.isEmpty()){
+            System.out.print("5. No hay opciones disponibles para agregar\n");
+            System.out.print("Se añadió el flujo al sistema");
+            sys.addComponente(flow);
+        }else{
+            System.out.print("5. Agregar opciones al flujo\nListado de opciones disponibles para agregar: \n");
+            for (Option_17986494_Sepulveda o: options){
+                o.toString();
+            }            
+            for (Option_17986494_Sepulveda o: options){
+                o.toString();
+            }
+            do {
+                System.out.print("Ingrese Id del componente que desea agregar o escriba 'no' para terminar: ");
+                String userInput = input.nextLine().toLowerCase();
+                if(options.isEmpty()){
+                    System.out.print("Ya no quedan comopnentes por agregar\n");
+                    break;
+                }                
+                if (userInput.equals("no")) {
+                    break;
+                }
+                try {
+                    int Id = Integer.parseInt(userInput);
+                    flow.addOptionToFLow(Componente_17986494_Sepulveda.getComponentById(options, Id));
+                    Componente_17986494_Sepulveda.remComponentById(options, Id);
+                } catch (NumberFormatException  e) {
+                    System.out.println("Recuerde ingresar opciones numéricas. Por favor inténtelo de nuevo.");
+
+                }                  
+            }while (true);
+            sys.addComponente(flow);
+        }
     }
 
     public static void menuCrearOption(System_17986494_Sepulveda sys){

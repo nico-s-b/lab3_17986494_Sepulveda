@@ -211,16 +211,16 @@ public class Main {
                         case 1:
                             //Creación de chatbots. Difiere si es el primer chatbot o ya existen más en el sistema
                             if (sys.getChatbots().isEmpty()){
-                                MenusComponentes_17986494_Sepulveda.menuCrearChatbot(sys,true);
+                                MenusCrear_17986494_Sepulveda.menuCrearChatbot(sys,true);
                             }else{
-                                MenusComponentes_17986494_Sepulveda.menuCrearChatbot(sys,false);
+                                MenusCrear_17986494_Sepulveda.menuCrearChatbot(sys,false);
                             }
                             break;
                         case 2:
-                            MenusComponentes_17986494_Sepulveda.menuCrearFlow(sys);
+                            MenusCrear_17986494_Sepulveda.menuCrearFlow(sys);
                             break;
                         case 3:
-                            MenusComponentes_17986494_Sepulveda.menuCrearOption(sys);
+                            MenusCrear_17986494_Sepulveda.menuCrearOption(sys);
                             break;
                         case 4:
                             returnToPrevMenu = true;
@@ -250,13 +250,7 @@ public class Main {
                     choice = input.nextInt();
                     switch (choice){
                         case 1:
-                            //Creación de chatbots. Difiere si es el primer chatbot o ya existen más en el sistema
-                            if (sys.getChatbots().isEmpty()){
-                                System.out.print("No hay chatbots que modificar!");
-                                returnToPrevMenu = true;
-                            }else{
-                                //MenusComponentes_17986494_Sepulveda.menuModificarChatbot(sys);
-                            }
+                            //MenusComponentes_17986494_Sepulveda.menuModificarChatbot(sys);
                             break;
                         case 2:
                             //MenusComponentes_17986494_Sepulveda.menuModificarFlow(sys);

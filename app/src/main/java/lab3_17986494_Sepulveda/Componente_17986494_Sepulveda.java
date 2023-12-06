@@ -10,7 +10,8 @@ import java.util.ArrayList;
  * Clase componente, que identifica a los diferentes componentes que pueden formar
  * parte de un sistema de chatbots y que puedan ser identificados mediante un Id
  * único; a saber: chatbot, flow y option, clases que heredan de esta. Contiene
- * un método que permite agregar componentes sin repetir Id a una lista de componentes.
+ * un método que permite agregar componentes sin repetir Id a una lista de componentes
+ * y otro para filtrar componentes de un tipo específico de un listado de componentes.
  * @author nic_s
  */
 public class Componente_17986494_Sepulveda {
@@ -45,14 +46,44 @@ public class Componente_17986494_Sepulveda {
         }
         list.add(comp);
     }
-    
-    public static <Type extends Componente_17986494_Sepulveda> ArrayList<Type> filterComponent(ArrayList<Type> list, Class<?> clase){
+
+/**
+* Método para filtrar componentes de una clase específica dentro de una lista de
+* componentes. Retorna una lista con objetos de la clase deseada, mientras estos
+* sean instancias de clases que heredan desde {@link Componente_17986494_Sepulveda}
+* @author nic_s
+     * @param <Type> tipo de elementos que se desean filtrar y devolver
+     * @param list lista de componentes genéricos que se desea filtrar
+     * @param clase clase del tipo de componentes que se desea filtrar
+     * @return Lista con componentes del tipo especificado
+*/
+    public static <Type extends Componente_17986494_Sepulveda> ArrayList<Type> filterComponent(
+            ArrayList<? extends Componente_17986494_Sepulveda> list, Class<Type> clase){
         ArrayList<Type> filteredList = new ArrayList<>();
-        for (Type c : list) {
+        for (Componente_17986494_Sepulveda c : list) {
             if (clase.isInstance(c)){
-                filteredList.add(c);
+                filteredList.add((Type) c);
             }
         }
         return filteredList;
     }
+    
+    public static <Type extends Componente_17986494_Sepulveda> Type getComponentById(
+        ArrayList<Type> list, int Id){
+        for (Type c : list){
+            if (c.getId() == Id){
+                return c;
+            }
+        }return null;
+    }
+    
+    public static <Type extends Componente_17986494_Sepulveda> void remComponentById(
+        ArrayList<Type> list, int Id){
+        for (Type c : list){
+            if (c.getId() == Id){
+                 list.remove(c);
+                 break;
+            }
+        }
+    }    
 }
