@@ -5,6 +5,8 @@
 package lab3_17986494_Sepulveda;
 
 import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.function.Consumer;
 
 /**
  * Clase componente, que identifica a los diferentes componentes que pueden formar
@@ -86,4 +88,40 @@ public class Componente_17986494_Sepulveda {
             }
         }
     }    
+
+    public static void agregarComponente(Scanner input, System_17986494_Sepulveda sys, String tipoComponente, 
+                        Componente_17986494_Sepulveda componente, Consumer<Componente_17986494_Sepulveda> funcionParaAgregar) {
+           System.out.println("Este es su nuevo " + tipoComponente);
+           System.out.println(componente.toString());
+
+           int ready = 0;
+           while (ready == 0) {
+               System.out.print("¿Añadir " + tipoComponente + " al sistema? Ingrese 'si' para confirmar, 'no' para cancelar: ");
+               String userInput = input.nextLine().toLowerCase();
+
+               if (userInput.equals("si")) {
+                   funcionParaAgregar.accept(componente);
+                   System.out.println("Se añadió el " + tipoComponente + " al sistema.");
+                   ready = 1;
+               } else if (userInput.equals("no")) {
+                   System.out.print("¿Desea guardar el " + tipoComponente + " en el listado de componentes? Ingrese 'si' para confirmar, 'no' para cancelar: ");
+                   String userInput2 = input.nextLine().toLowerCase();
+
+                   if (userInput2.equals("si")) {
+                       sys.addComponente(componente);
+                       System.out.println("Se añadió el " + tipoComponente + " al listado de componentes del sistema.");
+                       ready = 1;
+                   } else if (userInput2.equals("no")) {
+                       System.out.println("Ok, el " + tipoComponente + " no será guardado.");
+                       ready = 1;
+                   } else {
+                       System.out.println("Ingrese una opción válida.");
+                   }
+               } else {
+                   System.out.println("Ingrese una opción válida.");
+               }
+           }
+       }
+
+
 }

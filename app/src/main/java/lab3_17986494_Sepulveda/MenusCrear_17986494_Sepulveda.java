@@ -7,12 +7,13 @@ package lab3_17986494_Sepulveda;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.function.Consumer;
 
 /**
  *
  * @author nic_s
  */
-public class MenusCrear_17986494_Sepulveda {
+public class MenusCrear_17986494_Sepulveda extends Componente_17986494_Sepulveda {
 
     public static void menuCrearChatbot(System_17986494_Sepulveda sys, boolean isFirst){
         Chatbot_17986494_Sepulveda chatbot = new Chatbot_17986494_Sepulveda();
@@ -57,7 +58,7 @@ public class MenusCrear_17986494_Sepulveda {
             }
         }
         ArrayList<Flow_17986494_Sepulveda> flows = Componente_17986494_Sepulveda.<Flow_17986494_Sepulveda>filterComponent(
-                                                    sys.getComponentes(), Flow_17986494_Sepulveda.class);        
+                                                    sys.getComponentes(), Flow_17986494_Sepulveda.class);
         if (flows.isEmpty()){
             System.out.print("5. No hay flujos disponibles para agregar\n");
             System.out.print("Se añadió el chatbot al sistema");
@@ -66,7 +67,7 @@ public class MenusCrear_17986494_Sepulveda {
             System.out.print("5. Agregar flujos al chatbot\nListado de flujos disponibles para agregar: \n");
             
             for (Flow_17986494_Sepulveda f: flows){
-                f.toString();
+                System.out.println(f.toString());
             }
             do {
                 System.out.print("Ingrese Id del componente que desea agregar o escriba 'no' para terminar: ");
@@ -87,18 +88,8 @@ public class MenusCrear_17986494_Sepulveda {
 
                 }                  
             }while (true);
-            System.out.print("Este es su nuevo chatbot:\n");
-            chatbot.toString();
-            System.out.print("¿Añadir chatbot al sistema?\nIngrese 'si' para confirmar, 'no' para cancelar: ");
-            String userInput = input.nextLine().toLowerCase();
-            do {
-                if (userInput.equals("si")){
-                    sys.addChatbotToSystem(chatbot);
-                    System.out.print("Se añadió el chatbot al sistema");
-                }else{
-                    
-                }
-            }while ();
+            
+            menuAgregarComponente(input, sys, "chatbot", chatbot, c -> sys.addChatbotToSystem((Chatbot_17986494_Sepulveda)c));
 
         }       
     }
@@ -131,11 +122,9 @@ public class MenusCrear_17986494_Sepulveda {
         }else{
             System.out.print("5. Agregar opciones al flujo\nListado de opciones disponibles para agregar: \n");
             for (Option_17986494_Sepulveda o: options){
-                o.toString();
+                System.out.println(o.toString());
             }            
-            for (Option_17986494_Sepulveda o: options){
-                o.toString();
-            }
+
             do {
                 System.out.print("Ingrese Id del componente que desea agregar o escriba 'no' para terminar: ");
                 String userInput = input.nextLine().toLowerCase();
@@ -154,9 +143,11 @@ public class MenusCrear_17986494_Sepulveda {
                     System.out.println("Recuerde ingresar opciones numéricas. Por favor inténtelo de nuevo.");
 
                 }                  
-            }while (true);
-            sys.addComponente(flow);
+            }while (true);          
+            
         }
+        
+        menuAgregarComponente(input, sys, "flow", flow, f -> sys.addChatbotToSystem((Chatbot_17986494_Sepulveda)f));
     }
 
     public static void menuCrearOption(System_17986494_Sepulveda sys){
