@@ -59,10 +59,10 @@ public class Chatbot_17986494_Sepulveda extends Componente_17986494_Sepulveda{
   * @return String
   */    
     public String toPrint(){
-        String fl = this.getActualFlow().getName() + "\n";
+        String fl = "\n" + this.getActualFlow().getName() + "\n";
         String ops = "";
         for (Option_17986494_Sepulveda op: this.getActualFlow().getOptions()){
-            ops = op.getMessage() + "\n";
+            ops = ops + op.getMessage() + "\n";
         }
         return fl + ops;
     }
@@ -81,7 +81,7 @@ public class Chatbot_17986494_Sepulveda extends Componente_17986494_Sepulveda{
  */
     private Flow_17986494_Sepulveda getActualFlow(){
         for (Flow_17986494_Sepulveda fl: this.getFlows()){
-            if (fl.getId() != this.getStartFlowId()){
+            if (fl.getId() == this.getStartFlowId()){
                 return fl;
             } 
         }

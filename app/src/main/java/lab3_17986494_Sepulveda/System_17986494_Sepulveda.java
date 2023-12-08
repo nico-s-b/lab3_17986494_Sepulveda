@@ -4,7 +4,6 @@
  */
 package lab3_17986494_Sepulveda;
 
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
@@ -148,30 +147,42 @@ public class System_17986494_Sepulveda {
     }
     
 
-    public void systemInteraction(){
+    public void systemInteraction(Scanner input){
         if(!this.isLogState()){
             System.out.print("Sesión no iniciada, no es posible interactuar");
             return;
         }    
-        
         boolean continueInteraction = true; 
         
         while(continueInteraction){
             System.out.print(this.getActualChatbot().toPrint());
             System.out.print("Ingrese opcion: ");
-            
-            try (Scanner input = new Scanner(System.in)) {
-                String option = input.nextLine();
-                if (option.toLowerCase().equals("exit")) {
-                    continueInteraction = false;
-                }else{
-                    this.systemTalk(option);
-                }
+            String option = input.nextLine();
+
+            if (option.toLowerCase().equals("exit")) {
+                continueInteraction = false;
+            }else{
+                boolean opcionReconocida = false;
+                  for (Option_17986494_Sepulveda op: this.getActualFlow().getOptions()){
+                      if (op.optionMatch(option)){
+                          this.setChatbotCodeLink(op.getChatbotCodeLink());
+                          for (Chatbot_17986494_Sepulveda cb: this.getChatbots()){
+                              if (cb.getId() == op.getChatbotCodeLink()){
+                                  cb.setStartFlowId(op.getFlowCodeLink());
+                              }
+                          }
+                          opcionReconocida = true;
+                          break;
+                      }
+                  }
+                  if (!opcionReconocida) {
+                      System.out.println("Opción no reconocida. Intente otra vez");
+                  }     
             }           
         }
     }
     
-    private void systemTalk(String mensaje){
+    private void systemTalk(String mensaje, Scanner input){
         boolean opcionReconocida = false;
         for (Option_17986494_Sepulveda option: this.getActualFlow().getOptions()){
             if (option.optionMatch(mensaje)){
@@ -179,7 +190,7 @@ public class System_17986494_Sepulveda {
                 for (Chatbot_17986494_Sepulveda cb: this.getChatbots()){
                     if (cb.getId() == option.getChatbotCodeLink()){
                         cb.setStartFlowId(option.getFlowCodeLink());
-                        this.systemInteraction();
+                        this.systemInteraction(input);
                     }
                 }
                 opcionReconocida = true;
@@ -188,7 +199,7 @@ public class System_17986494_Sepulveda {
         }
         if (!opcionReconocida) {
             System.out.println("Opción no reconocida.");
-            this.systemInteraction();
+            this.systemInteraction(input);
         }       
     }
     

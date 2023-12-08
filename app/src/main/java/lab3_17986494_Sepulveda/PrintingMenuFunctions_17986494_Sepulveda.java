@@ -8,12 +8,13 @@ package lab3_17986494_Sepulveda;
  *
  * @author nic_s
  */
-public class Menus_17986494_Sepulveda {
+public class PrintingMenuFunctions_17986494_Sepulveda {
 
     public static void printMenuFirst() {
         System.out.println("Bienvenido al sistema de Chatbots!\n");
         System.out.print("1. Registre al usuario administrador \n");
-        System.out.print("2. Salir\n");
+        System.out.print("2. Probar demo del sistema \n");
+        System.out.print("3. Salir\n");
         System.out.print("\nIngrese opcion: ");
     }    
     
