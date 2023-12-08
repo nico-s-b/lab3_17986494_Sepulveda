@@ -33,7 +33,7 @@ java {
 
 application {
     // Define the main class for the application.
-    mainClass = 'lab3_17986494_Sepulveda.App'
+    mainClass = 'lab3_17986494_Sepulveda.Main'
 }
 
 tasks.named('test') {

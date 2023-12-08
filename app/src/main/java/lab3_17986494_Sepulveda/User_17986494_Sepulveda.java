@@ -25,19 +25,17 @@ public abstract class User_17986494_Sepulveda {
     public String toString() {
         return this.getUsername();
     }
- 
-
     
     public void userLogin(System_17986494_Sepulveda system){
-        system.login(this);
+        system.systemLogin(this);
     }
     
     public void userLogout(System_17986494_Sepulveda system){
-        system.logout();
+        system.systemLogout();
     }
 
     public void requestSynthesis(System_17986494_Sepulveda system){
-        system.synthesis(this);
+        system.systemSynthesis(this);
     }
 
 /**
@@ -51,7 +49,7 @@ public abstract class User_17986494_Sepulveda {
         Date currentDate = new Date();
         long currentTimeMillis = currentDate.getTime();
         int currentSeconds = (int) (currentTimeMillis / 10000);
-        system.simulate(maxInter, currentSeconds);
+        system.systemSimulate(maxInter, currentSeconds);
     }
     
     private void addMessage(Message_17986494_Sepulveda mens){

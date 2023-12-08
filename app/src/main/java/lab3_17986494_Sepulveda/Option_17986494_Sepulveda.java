@@ -22,7 +22,20 @@ public class Option_17986494_Sepulveda extends Componente_17986494_Sepulveda{
     private ArrayList<String> keywords;
     
     public Option_17986494_Sepulveda(){
+        super();
         this.keywords = new ArrayList<>();
+    }
+
+    public Option_17986494_Sepulveda(int id, String message, int chatbotId, int flowId, ArrayList<String> keys){
+        super(id);
+        this.message = message;
+        this.chatbotCodeLink = chatbotId;
+        this.flowCodeLink = flowId;
+        
+        this.keywords = new ArrayList<>();  
+        for(String word: keys){
+            this.keywords.add(word.toLowerCase());
+        }            
     }
     
 /**
@@ -47,6 +60,14 @@ public class Option_17986494_Sepulveda extends Componente_17986494_Sepulveda{
         }
         return atr1+atr2;
     }     
+    
+    public boolean optionMatch(String mensaje){
+        if (keywords.contains(mensaje) || mensaje.equals(Integer.toString(this.getId()))){
+            return true;
+        }else{
+            return false;
+        }
+    }
     
     //Getters
 

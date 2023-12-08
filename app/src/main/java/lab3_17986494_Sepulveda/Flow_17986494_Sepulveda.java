@@ -15,13 +15,21 @@ import java.util.ArrayList;
  */
 public class Flow_17986494_Sepulveda extends Componente_17986494_Sepulveda{
     
-    private String nameMessage;
+    private String name;
     private ArrayList<Option_17986494_Sepulveda> options;
     
     public Flow_17986494_Sepulveda(){
+        super();
         this.options = new ArrayList<>();
     }
 
+    public Flow_17986494_Sepulveda(int id, String name, ArrayList<Option_17986494_Sepulveda> options){
+        super(id);
+        this.name = name;
+        //Método para remover duplicados
+        this.options = Componente_17986494_Sepulveda.remDuplicates(options);
+    }
+    
     /**
      * Método que añade una opción a un flujo, evitando añadir opciones duplicadas
      * de acuerdo al Id de estas. Llama al método {@link Componente_17986494_Sepulveda#addComponent(java.util.ArrayList, lab3_17986494_Sepulveda.Componente_17986494_Sepulveda)}
@@ -29,7 +37,7 @@ public class Flow_17986494_Sepulveda extends Componente_17986494_Sepulveda{
      * @author nic_s
      * @param option
      */
-    public void addOptionToFLow(Option_17986494_Sepulveda option){
+    public void flowAddOption(Option_17986494_Sepulveda option){
         try{
             Componente_17986494_Sepulveda.addComponent(this.getOptions(), option);
         } catch (IllegalArgumentException e) {
@@ -39,7 +47,7 @@ public class Flow_17986494_Sepulveda extends Componente_17986494_Sepulveda{
 
     @Override
     public String toString(){
-        String atr1 = String.format("Flujo: '%s'\nFlow Id: %d\n", this.getNameMessage(), this.getId());
+        String atr1 = String.format("Flujo: '%s'\nFlow Id: %d\n", this.getName(), this.getId());
         String atr2 = String.format("# Opciones cargadas: %d\n",this.getOptions().size());
         String atr3 = "";
         for (Option_17986494_Sepulveda op: this.getOptions()){
@@ -50,12 +58,12 @@ public class Flow_17986494_Sepulveda extends Componente_17986494_Sepulveda{
     
     //Getters & Setters
     
-    public String getNameMessage() {
-        return nameMessage;
+    public String getName() {
+        return name;
     }
 
-    public void setNameMessage(String nameMessage) {
-        this.nameMessage = nameMessage;
+    public void setName(String name) {
+        this.name = name;
     }    
     
     public ArrayList<Option_17986494_Sepulveda> getOptions() {

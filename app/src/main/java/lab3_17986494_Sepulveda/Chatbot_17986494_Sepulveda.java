@@ -21,9 +21,19 @@ public class Chatbot_17986494_Sepulveda extends Componente_17986494_Sepulveda{
     private ArrayList<Flow_17986494_Sepulveda> flows;
 
     public Chatbot_17986494_Sepulveda(){
+        super();
         this.flows = new ArrayList<>();
     }
 
+    public Chatbot_17986494_Sepulveda(int id, String name, String welcome, int flowId, ArrayList<Flow_17986494_Sepulveda> flows){
+        super(id);
+        this.name = name;
+        this.welcomeMessage = welcome;
+        this.startFlowId = flowId;
+        //Método para remover duplicados
+        this.flows = Componente_17986494_Sepulveda.remDuplicates(flows);
+    }
+    
 /**
  * Método que añade un flujo a un chatbot, evitando añadir flujos duplicados
  * de acuerdo al Id de estos. Llama al método {@link Componente_17986494_Sepulveda#addComponent(java.util.ArrayList, lab3_17986494_Sepulveda.Componente_17986494_Sepulveda)}
@@ -32,7 +42,7 @@ public class Chatbot_17986494_Sepulveda extends Componente_17986494_Sepulveda{
  * 
  * @param flow
  */
-    public void addFlowToChatbot(Flow_17986494_Sepulveda flow){
+    public void chatbotAddFlow(Flow_17986494_Sepulveda flow){
         try{
             Componente_17986494_Sepulveda.addComponent(this.getFlows(), flow);
         } catch (IllegalArgumentException e) {
@@ -49,7 +59,7 @@ public class Chatbot_17986494_Sepulveda extends Componente_17986494_Sepulveda{
   * @return String
   */    
     public String toPrint(){
-        String fl = this.getActualFlow().getNameMessage() + "\n";
+        String fl = this.getActualFlow().getName() + "\n";
         String ops = "";
         for (Option_17986494_Sepulveda op: this.getActualFlow().getOptions()){
             ops = op.getMessage() + "\n";

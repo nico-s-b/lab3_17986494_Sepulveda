@@ -4,8 +4,11 @@
  */
 package lab3_17986494_Sepulveda;
 
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Random;
+import java.util.Scanner;
 
 /**
  *Clase para Sistema. Contiene el conjunto de chatbots asociados a un sistema, 
@@ -15,13 +18,13 @@ import java.util.Random;
 public class System_17986494_Sepulveda {
     private String name;
     private int chatbotCodeLink;
-    private String date;
     private ArrayList<Chatbot_17986494_Sepulveda> chatbots;
     private ArrayList<User_17986494_Sepulveda> users;
     private boolean logState;
     private boolean logAdmin;
     private String loggedUser;
-    private ArrayList<Componente_17986494_Sepulveda> waitingComponents;
+    private ArrayList<Componente_17986494_Sepulveda> componentesDisponibles;
+    private Date fechaCreacion;
 
     public System_17986494_Sepulveda(){
         this.chatbotCodeLink = 0;
@@ -29,8 +32,21 @@ public class System_17986494_Sepulveda {
         this.users = new ArrayList<>();
         this.logState = false;
         this.logAdmin = false;
-        this.loggedUser ="";
-        this.waitingComponents = new ArrayList<>();
+        this.loggedUser = "";
+        this.componentesDisponibles = new ArrayList<>();
+        this.fechaCreacion = new Date();
+    }
+    
+    public System_17986494_Sepulveda(String name, int chatbotCodeLink, ArrayList<Chatbot_17986494_Sepulveda> chatbots){
+        this.name = name;
+        this.chatbotCodeLink = chatbotCodeLink;
+        this.chatbots = Componente_17986494_Sepulveda.remDuplicates(chatbots);
+        this.users = new ArrayList<>();
+        this.logState = false;
+        this.logAdmin = false;
+        this.loggedUser = "";
+        this.componentesDisponibles = new ArrayList<>();
+        this.fechaCreacion = new Date();  
     }
 
 /**
@@ -41,7 +57,7 @@ public class System_17986494_Sepulveda {
  * 
  * @param chatbot
  */
-    public void addChatbotToSystem(Chatbot_17986494_Sepulveda chatbot){
+    public void systemAddChatbot(Chatbot_17986494_Sepulveda chatbot){
         try{
             Componente_17986494_Sepulveda.addComponent(this.getChatbots(), chatbot);
         } catch (IllegalArgumentException e) {
@@ -52,7 +68,7 @@ public class System_17986494_Sepulveda {
 /**
  * Método para registrar usuarios nuevos al sistema.Recibe un nombre de usuario 
  * y si éste tendrá o no privilegios de administrador.Crea un nuevo usuario
- * y lo añade al sistema utilizando el método {@link #addUser(lab3_17986494_Sepulveda.User_17986494_Sepulveda)}
+ * y lo añade al sistema utilizando el método {@link #systemAddUser(lab3_17986494_Sepulveda.User_17986494_Sepulveda)}
  * @author nic_s
  * 
  * @param username
@@ -65,10 +81,10 @@ public class System_17986494_Sepulveda {
         }else{
             user = new NormalUser_17986494_Sepulveda(username);
         }
-        this.addUser(user);
+        this.systemAddUser(user);
     }
      
-    private void addUser(User_17986494_Sepulveda user){
+    private void systemAddUser(User_17986494_Sepulveda user){
         for (User_17986494_Sepulveda us : this.getUsers()){
             if (us.getUsername().equals(user.getUsername())){
                 throw new IllegalArgumentException("Ya existe un usuario con el mismo nombre en el sistema.");
@@ -86,7 +102,7 @@ public class System_17986494_Sepulveda {
  * 
  * @param user
  */
-    public void login(User_17986494_Sepulveda user){
+    public void systemLogin(User_17986494_Sepulveda user){
         if (this.isLogState()){
             throw new IllegalStateException("Ya existe una sesión iniciada en el sistema.");
         }
@@ -102,6 +118,12 @@ public class System_17986494_Sepulveda {
         }
     }
     
+/**
+ * Método que busca si un usuario dado está o no registrado en el sistema
+ * 
+ * @param username
+ * @return boolean 
+ */    
     private boolean userInSystem(User_17986494_Sepulveda user){
         for (User_17986494_Sepulveda us : this.getUsers()){
             if (us.getUsername().equals(user.getUsername())){
@@ -110,8 +132,12 @@ public class System_17986494_Sepulveda {
         }
         return false;
     }
-       
-    public void logout(){
+
+/**
+ * Método para cerrar sesión, cambiando todos los parámetros necesarios del sistema
+ * @throws IllegalStateException si no hay una sesión iniciada 
+ */        
+    public void systemLogout(){
         if (this.isLogState()){
             this.setLogState(false);
             this.setLogAdmin(false);
@@ -121,18 +147,89 @@ public class System_17986494_Sepulveda {
         }
     }
     
-    public String simulate(int maxInter, int seed){
+
+    public void systemInteraction(){
+        if(!this.isLogState()){
+            System.out.print("Sesión no iniciada, no es posible interactuar");
+            return;
+        }    
+        
+        boolean continueInteraction = true; 
+        
+        while(continueInteraction){
+            System.out.print(this.getActualChatbot().toPrint());
+            System.out.print("Ingrese opcion: ");
+            
+            try (Scanner input = new Scanner(System.in)) {
+                String option = input.nextLine();
+                if (option.toLowerCase().equals("exit")) {
+                    continueInteraction = false;
+                }else{
+                    this.systemTalk(option);
+                }
+            }           
+        }
+    }
+    
+    private void systemTalk(String mensaje){
+        boolean opcionReconocida = false;
+        for (Option_17986494_Sepulveda option: this.getActualFlow().getOptions()){
+            if (option.optionMatch(mensaje)){
+                this.setChatbotCodeLink(option.getChatbotCodeLink());
+                for (Chatbot_17986494_Sepulveda cb: this.getChatbots()){
+                    if (cb.getId() == option.getChatbotCodeLink()){
+                        cb.setStartFlowId(option.getFlowCodeLink());
+                        this.systemInteraction();
+                    }
+                }
+                opcionReconocida = true;
+                break;
+            }
+        }
+        if (!opcionReconocida) {
+            System.out.println("Opción no reconocida.");
+            this.systemInteraction();
+        }       
+    }
+    
+    public String systemSimulate(int maxInter, int seed){
         String fakeUser = "user" + Integer.toString(seed);
         NormalUser_17986494_Sepulveda user = new NormalUser_17986494_Sepulveda(fakeUser);
-        this.addUser(user);
+        this.systemAddUser(user);
         Random random = new Random(seed);
         return fakeUser;
     }
      
-    public String synthesis(User_17986494_Sepulveda user){
+    public String systemSynthesis(User_17986494_Sepulveda user){
         return user.getUsername();
     }
 
+/**
+ * Método para mostrar un listado de todos los usuarios registrados en el sistema
+ */        
+    public void registeredUsers(){
+        for (User_17986494_Sepulveda us : this.getUsers()){
+            System.out.print(us);
+            System.out.print("\n");
+        }
+    }
+
+/**
+ * Método que agrega un componente (chatbot, flujo, opcion) a la lista de componentes
+ * disponibles para uso del sistema.
+ * 
+ * @param comp
+ */        
+    public void addComponente(Componente_17986494_Sepulveda comp){
+        this.componentesDisponibles.add(comp);
+    }
+
+    //Specific getters
+/**
+ * Devuelve el usuario administrador del sistema
+ * 
+ * @return user 
+ */    
     public User_17986494_Sepulveda getAdmin(){
         for (User_17986494_Sepulveda us : this.getUsers()){
             if (us.isAdmin()){
@@ -141,7 +238,13 @@ public class System_17986494_Sepulveda {
         }
         return null;
     }
-    
+
+/**
+ * Devuelve un usuario del sistema de acuerdo al nombre
+ * 
+ * @param username
+ * @return user 
+ */        
     public User_17986494_Sepulveda getUser(String username){
         for (User_17986494_Sepulveda us : this.getUsers()){
             if (us.getUsername().equals(username) ){
@@ -150,16 +253,90 @@ public class System_17986494_Sepulveda {
         }
         return null;
     }
-    
-    public void registeredUsers(){
-        for (User_17986494_Sepulveda us : this.getUsers()){
-            System.out.print(us);
-            System.out.print("\n");
+
+/**
+ * Método que entrega una lista de TODOS los chatbots en el sistema, tanto
+ * los que están cargados en él como los que se encuentran en el listado de
+ * componentes disponibles
+ * 
+ * @return listado de chatbots 
+ */        
+    public ArrayList<Chatbot_17986494_Sepulveda> getAllChatbots(){
+        ArrayList<Chatbot_17986494_Sepulveda> list = new ArrayList<>();
+        for (Chatbot_17986494_Sepulveda cb: this.getChatbots()){
+            list.add(cb);
         }
+        for (Componente_17986494_Sepulveda comp: this.getComponentes()){
+            if (comp instanceof Chatbot_17986494_Sepulveda){
+                list.add((Chatbot_17986494_Sepulveda) comp);
+            }
+        }
+        return list;
     }
 
-    public void addComponente(Componente_17986494_Sepulveda comp){
-        this.waitingComponents.add(comp);
+/**
+ * Método que entrega una lista de TODOS los flujos en el sistema, tanto
+ * los que están cargados en cada chatbot cargado en el sistema como los que 
+ * se encuentran en el listado de componentes disponibles
+ * 
+ * @return listado de flujos
+ */      
+    public ArrayList<Flow_17986494_Sepulveda> getAllFlows(){
+        ArrayList<Flow_17986494_Sepulveda> list = new ArrayList<>();
+        for (Chatbot_17986494_Sepulveda cb: this.getChatbots()){
+            for(Flow_17986494_Sepulveda fl: cb.getFlows()){
+                list.add(fl);
+            }
+        }
+        for (Componente_17986494_Sepulveda comp: this.getComponentes()){
+            if (comp instanceof Flow_17986494_Sepulveda){
+                list.add((Flow_17986494_Sepulveda) comp);
+            }
+        }
+        return list;
+    }
+
+/**
+ * Método que entrega una lista de TODAS las opciones en el sistema, tanto
+ * las que están añadidas en cada flujo de cada chatbot cargado en el sistema 
+ * como las que se encuentran en el listado de componentes disponibles
+ * 
+ * @return listado de opciones
+ */         
+    public ArrayList<Option_17986494_Sepulveda> getAllOptions(){
+        ArrayList<Option_17986494_Sepulveda> list = new ArrayList<>();
+        for (Chatbot_17986494_Sepulveda cb: this.getChatbots()){
+            for(Flow_17986494_Sepulveda fl: cb.getFlows()){
+                for(Option_17986494_Sepulveda op: fl.getOptions()){
+                    list.add(op);
+                }
+            }
+        }
+        for (Componente_17986494_Sepulveda comp: this.getComponentes()){
+            if (comp instanceof Option_17986494_Sepulveda){
+                list.add((Option_17986494_Sepulveda) comp);
+            }
+        }
+        return list;
+    }
+    
+    private Chatbot_17986494_Sepulveda getActualChatbot(){
+        for (Chatbot_17986494_Sepulveda cb: this.getChatbots()){
+            if (cb.getId() == this.getChatbotCodeLink()){
+                return cb;
+            }
+        }
+        return null;
+    }
+    
+    private Flow_17986494_Sepulveda getActualFlow(){
+        Chatbot_17986494_Sepulveda cb = this.getActualChatbot();
+        for (Flow_17986494_Sepulveda fl: cb.getFlows()){
+            if (fl.getId() == cb.getStartFlowId()){
+                return fl;
+            }
+        }
+        return null;
     }
     
     //Getters & Setters
@@ -176,11 +353,7 @@ public class System_17986494_Sepulveda {
         this.chatbotCodeLink = chatbotCodeLink;
     }
 
-    public String getDate() {
-        return date;
-    }
-
-    public ArrayList<Chatbot_17986494_Sepulveda> getChatbots() {
+   public ArrayList<Chatbot_17986494_Sepulveda> getChatbots() {
         return chatbots;
     }
 
@@ -189,7 +362,7 @@ public class System_17986494_Sepulveda {
     }
 
     public ArrayList<Componente_17986494_Sepulveda> getComponentes() {
-        return waitingComponents;
+        return componentesDisponibles;
     }
     
     public boolean isLogState() {

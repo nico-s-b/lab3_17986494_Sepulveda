@@ -28,11 +28,12 @@ public class Menus_17986494_Sepulveda {
         System.out.println("¿Qué desea hacer, Administrador?\n");
         System.out.print("1. Crear componentes del sistema\n");
         System.out.print("2. Modificar componentes del sistema\n");
-        System.out.print("3. Interactuar con el sistema\n");
-        System.out.print("4. Añadir usuarios\n");
-        System.out.print("5. Ver usuarios registrados\n");
-        System.out.print("6. Cerrar sesión\n");
-        System.out.print("7. Salir\n");
+        System.out.print("3. Añadir componentes disponibles al sistema\n");
+        System.out.print("4. Interactuar con el sistema\n");
+        System.out.print("5. Añadir usuarios\n");
+        System.out.print("6. Ver usuarios registrados\n");
+        System.out.print("7. Cerrar sesión\n");
+        System.out.print("8. Salir\n");
         System.out.print("\nIngrese opcion: ");
     }
 
@@ -62,6 +63,15 @@ public class Menus_17986494_Sepulveda {
         System.out.print("4. Volver\n");
         System.out.print("\nIngrese opcion: ");
     }        
+
+    public static void printMenuAgregar(){
+        System.out.println("¿Qué deseas hacer?\n");
+        System.out.print("1. Agregar un chatbot\n");
+        System.out.print("2. Agregar un flujo\n");
+        System.out.print("3. Agregar una opción\n");
+        System.out.print("4. Volver\n");
+        System.out.print("\nIngrese opcion: ");
+    }    
     
     public static void printMenuInteract(boolean isAdmin){
         System.out.println("¿Qué deseas hacer?\n");
