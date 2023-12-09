@@ -14,30 +14,38 @@ import java.util.Arrays;
  */
 public class DemoSystem_17986494_Sepulveda {
 
+    /**
+     * Método único de la clase DemoSystem que retorna un sistema que contiene
+     * un conjunto cargado de chatbots con sus flujos y opciones definidos, junto
+     * a un usuario 'admin' y otro usuario normal 'user0'. Puede emplearse para
+     * probar el sistema.
+     * 
+     * @return Demo system
+     */    
     public static System_17986494_Sepulveda getDemo() {
 
         //Chatbot 0
-        ArrayList<String> op1keys = new ArrayList<>(Arrays.asList("fechas", "calendario", "dias"));
+        ArrayList<String> op1keys = new ArrayList<>(Arrays.asList("fechas", "calendario", "dias", "fecha"));
         Option_17986494_Sepulveda op1 = new Option_17986494_Sepulveda(1, "1) Calendario", 1, 1, op1keys);
 
-        ArrayList<String> op2keys = new ArrayList<>(Arrays.asList("tareas","pendientes","tasks"));
+        ArrayList<String> op2keys = new ArrayList<>(Arrays.asList("tareas","pendientes","tasks", "tarea"));
         Option_17986494_Sepulveda op2 = new Option_17986494_Sepulveda(2, "2) Tareas", 2, 1, op2keys);
 
-        ArrayList<String> op3keys = new ArrayList<>(Arrays.asList("fechas", "calendario", "dias"));
+        ArrayList<String> op3keys = new ArrayList<>(Arrays.asList("meta", "metas", "goals", "objetivos"));
         Option_17986494_Sepulveda op3 = new Option_17986494_Sepulveda(3, "3) Metas", 3, 1, op3keys);
 
         ArrayList<Option_17986494_Sepulveda> flow1ops = new ArrayList<>(Arrays.asList(op1, op2, op3));
-        Flow_17986494_Sepulveda flow1 = new Flow_17986494_Sepulveda(1,"Flujo Principal Organizador\nBienvenido\n¿Qué te gustaría revisar?",flow1ops);
+        Flow_17986494_Sepulveda flow1 = new Flow_17986494_Sepulveda(1,"Flujo Principal Organizador\nBienvenido\n¿Que te gustaria revisar?",flow1ops);
 
         ArrayList<Flow_17986494_Sepulveda> chatbot0flows = new ArrayList<>(Arrays.asList(flow1));
-        Chatbot_17986494_Sepulveda chatbot0 = new Chatbot_17986494_Sepulveda(0,"Inicial", "Bienvenido\n¿Qué te gustaría revisar?", 1,chatbot0flows);
+        Chatbot_17986494_Sepulveda chatbot0 = new Chatbot_17986494_Sepulveda(0,"Inicial", "Bienvenido\n¿Que te gustaria revisar?", 1,chatbot0flows);
 
         ////////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////
 
         //Chatbot 1
         //Opciones primer flujo Chatbot1
-        ArrayList<String> op4keys = new ArrayList<>(Arrays.asList("día", "diario"));
+        ArrayList<String> op4keys = new ArrayList<>(Arrays.asList("dia", "diario"));
         Option_17986494_Sepulveda op4 = new Option_17986494_Sepulveda(1, "1) 1 día", 1, 2, op4keys);
 
         ArrayList<String> op5keys = new ArrayList<>(Arrays.asList("semana","semanal","week"));
@@ -50,13 +58,13 @@ public class DemoSystem_17986494_Sepulveda {
         Option_17986494_Sepulveda op7 = new Option_17986494_Sepulveda(4, "4) Volver", 0, 1, op7keys);
 
         //Opciones segundo flujo Chatbot1
-        ArrayList<String> op8keys = new ArrayList<>(Arrays.asList("tareas", "task"));
+        ArrayList<String> op8keys = new ArrayList<>(Arrays.asList("tarea","tareas", "task"));
         Option_17986494_Sepulveda op8 = new Option_17986494_Sepulveda(1, "1) 1 día", 1, 1, op8keys);
 
-        ArrayList<String> op9keys = new ArrayList<>(Arrays.asList("eventos","events"));
+        ArrayList<String> op9keys = new ArrayList<>(Arrays.asList("eventos","events","evento"));
         Option_17986494_Sepulveda op9 = new Option_17986494_Sepulveda(2, "2) 1 semana", 1, 1, op9keys);
 
-        ArrayList<String> op10keys = new ArrayList<>(Arrays.asList("cumpleaños", "cumples", "bday"));
+        ArrayList<String> op10keys = new ArrayList<>(Arrays.asList("cumpleaños", "cumples", "bday","cumple"));
         Option_17986494_Sepulveda op10 = new Option_17986494_Sepulveda(3, "3) 1 mes", 1, 1, op10keys);
 
         ArrayList<String> op11keys = new ArrayList<>(Arrays.asList("regresar", "salir", "volver"));
@@ -70,7 +78,7 @@ public class DemoSystem_17986494_Sepulveda {
         Flow_17986494_Sepulveda flow3 = new Flow_17986494_Sepulveda(2,"Flujo 2 Chatbot1\n¿Deseas resaltar algo del calendario?",flow3ops);
 
         ArrayList<Flow_17986494_Sepulveda> chatbot1flows = new ArrayList<>(Arrays.asList(flow2,flow3));
-        Chatbot_17986494_Sepulveda chatbot1 = new Chatbot_17986494_Sepulveda(1,"Calendario", "Elige ventana de tiempo del calendario", 1,chatbot1flows);
+        Chatbot_17986494_Sepulveda chatbot1 = new Chatbot_17986494_Sepulveda(1,"Calendario", "¿Que deseas hacer con el calendario?", 1,chatbot1flows);
 
         ////////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -104,13 +112,13 @@ public class DemoSystem_17986494_Sepulveda {
 
         //Flujos Chatbot 2
         ArrayList<Option_17986494_Sepulveda> flow4ops = new ArrayList<>(Arrays.asList(op12, op13, op14, op15));
-        Flow_17986494_Sepulveda flow4 = new Flow_17986494_Sepulveda(1,"Flujo 1 Chatbot2\n¿Qué te gustaría hacer con las tareas?",flow4ops);
+        Flow_17986494_Sepulveda flow4 = new Flow_17986494_Sepulveda(1,"Flujo 1 Chatbot2\n¿Que te gustaria hacer con las tareas?",flow4ops);
 
         ArrayList<Option_17986494_Sepulveda> flow5ops = new ArrayList<>(Arrays.asList(op16, op17, op18, op19));
-        Flow_17986494_Sepulveda flow5 = new Flow_17986494_Sepulveda(2,"Flujo 2 Chatbot2\n¿De qué forma quieres filtrar las tareas?",flow5ops);
+        Flow_17986494_Sepulveda flow5 = new Flow_17986494_Sepulveda(2,"Flujo 2 Chatbot2\n¿De que forma quieres filtrar las tareas?",flow5ops);
 
         ArrayList<Flow_17986494_Sepulveda> chatbot2flows = new ArrayList<>(Arrays.asList(flow4,flow5));
-        Chatbot_17986494_Sepulveda chatbot2 = new Chatbot_17986494_Sepulveda(2,"Tareas", "Bienvenido\n¿Qué te gustaría hacer con las tareas?", 1,chatbot2flows);
+        Chatbot_17986494_Sepulveda chatbot2 = new Chatbot_17986494_Sepulveda(2,"Tareas", "Bienvenido\n¿Que te gustaria hacer con las tareas?", 1,chatbot2flows);
 
         ////////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -130,10 +138,10 @@ public class DemoSystem_17986494_Sepulveda {
         Option_17986494_Sepulveda op23 = new Option_17986494_Sepulveda(4, "4) Volver", 0, 1, op23keys);
 
         ArrayList<Option_17986494_Sepulveda> flow6ops = new ArrayList<>(Arrays.asList(op20, op21, op22, op23));
-        Flow_17986494_Sepulveda flow6 = new Flow_17986494_Sepulveda(1,"Flujo 1 Chatbot3\n¿Qué te gustaría hacer con las metas?",flow6ops);
+        Flow_17986494_Sepulveda flow6 = new Flow_17986494_Sepulveda(1,"Flujo 1 Chatbot3\n¿Que te gustaria hacer con las metas?",flow6ops);
 
         ArrayList<Flow_17986494_Sepulveda> chatbot3flows = new ArrayList<>(Arrays.asList(flow6));
-        Chatbot_17986494_Sepulveda chatbot3 = new Chatbot_17986494_Sepulveda(3,"Metas", "\"Bienvenido\\n¿Qué te gustaría hacer con las metas?", 1,chatbot3flows);
+        Chatbot_17986494_Sepulveda chatbot3 = new Chatbot_17986494_Sepulveda(3,"Metas", "\"Bienvenido\n¿Que te gustaria hacer con las metas?", 1,chatbot3flows);
 
         ////////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////    

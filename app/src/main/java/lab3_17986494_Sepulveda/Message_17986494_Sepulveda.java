@@ -6,31 +6,37 @@ package lab3_17986494_Sepulveda;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
 /**
- *
+ *Clase de mensaje de interacción. Un nuevo mensaje se genera cada vez que un usuario
+ * interactúa con un chatbot y envía una respuesta al sistema. Estos mensajes se almacenan
+ * en el registro chatHistory del usuario. Incluye toda la información necesaria
+ * para recomponer en formato String una interacción en particular.
  * @author nic_s
  */
 public class Message_17986494_Sepulveda {
-    private int chatbotCodeLink;
-    private int flowCodeLink;
+    private Date systemDate;
+    private Date userDate;
+    private String menuPrint;
     private String mens;
-    private String date;
-    private String username;
+    private String user;
     
-    Message_17986494_Sepulveda(int cbLink, int fLink, String mens,User_17986494_Sepulveda user){
-        this.chatbotCodeLink = cbLink;
-        this.flowCodeLink = fLink;
+    Message_17986494_Sepulveda(Date systemDate, Date userDate, String menu, String mens, String user){
+        this.systemDate = systemDate;
+        this.userDate = userDate;
+        this.menuPrint = menu;
         this.mens = mens;
-        Date currentDate = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        String currentDateFormatted = dateFormat.format(currentDate);
-        this.date = currentDateFormatted;
-        this.username = user.getUsername();
+        this.user = user;
     }
     
     @Override
     public String toString(){
-        return date + " : " + this.username + ": " + mens;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        String systemDateFormat = dateFormat.format(systemDate);
+        String userDateFormat = dateFormat.format(userDate);
+        String message = systemDateFormat + " - " + this.menuPrint + userDateFormat 
+                + " - " + this.user + ": " + this.mens + "\n";   
+        return message;
     }
     
 }

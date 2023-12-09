@@ -5,7 +5,8 @@
 package lab3_17986494_Sepulveda;
 
 /**
- *
+ *Clase de usuarios normales. Hereda de la clase de usuario general. Usuario
+ * sin privilegios de administrador.
  * @author nic_s
  */
 public class NormalUser_17986494_Sepulveda extends User_17986494_Sepulveda {

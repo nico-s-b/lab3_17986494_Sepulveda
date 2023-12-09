@@ -18,11 +18,23 @@ public class Flow_17986494_Sepulveda extends Componente_17986494_Sepulveda{
     private String name;
     private ArrayList<Option_17986494_Sepulveda> options;
     
+    /**
+     *Constructor de Flow por defecto. Entrega una instancia de Flow sin atributos
+     * inicializados
+     */
     public Flow_17986494_Sepulveda(){
         super();
         this.options = new ArrayList<>();
     }
 
+    /**
+     *Constructor de Flow inicializado. Construye una instancia de flujo a partir de
+     * sus atributos de identificador, nombre/mensaje y listado de opciones
+     * 
+     * @param id Código identificador de flujo
+     * @param name Nombre y descripción del flujo
+     * @param options Listado de opciones del flujo
+     */
     public Flow_17986494_Sepulveda(int id, String name, ArrayList<Option_17986494_Sepulveda> options){
         super(id);
         this.name = name;
@@ -34,8 +46,8 @@ public class Flow_17986494_Sepulveda extends Componente_17986494_Sepulveda{
      * Método que añade una opción a un flujo, evitando añadir opciones duplicadas
      * de acuerdo al Id de estas. Llama al método {@link Componente_17986494_Sepulveda#addComponent(java.util.ArrayList, lab3_17986494_Sepulveda.Componente_17986494_Sepulveda)}
      * para realizar la acción. Captura el error lanzado por dicho método.
-     * @author nic_s
-     * @param option
+     * 
+     * @param option opción que se desea añadir
      */
     public void flowAddOption(Option_17986494_Sepulveda option){
         try{

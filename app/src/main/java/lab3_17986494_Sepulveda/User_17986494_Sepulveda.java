@@ -5,10 +5,10 @@
 package lab3_17986494_Sepulveda;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
- *
+ * Clase abstracta de usuario general. Contiene los atributos y métodos comunes a
+ * los distintos dipos de usuario que puede haber en el sistema
  * @author nic_s
  */
 public abstract class User_17986494_Sepulveda {
@@ -25,37 +25,33 @@ public abstract class User_17986494_Sepulveda {
     public String toString() {
         return this.getUsername();
     }
-    
-    public void userLogin(System_17986494_Sepulveda system){
-        system.systemLogin(this);
-    }
-    
-    public void userLogout(System_17986494_Sepulveda system){
-        system.systemLogout();
-    }
-
-    public void requestSynthesis(System_17986494_Sepulveda system){
-        system.systemSynthesis(this);
-    }
-
-/**
- * Método para solicitar una simulación.
- * Una vez llamado, se utiliza el tiempo en segundos obtenido a partir de Date() como semilla para la simulación.
- * El método hace un llamado al método del TDA system que ejecuta la simulación.
- * @param system sistema sobre el cual se está solicitando la simulación. No se le solicita al usuario
- * @param maxInter cantidad máxima de interacciones solicitadas por el usuario
- */    
-    public void requestSimulation(System_17986494_Sepulveda system, int maxInter){
-        Date currentDate = new Date();
-        long currentTimeMillis = currentDate.getTime();
-        int currentSeconds = (int) (currentTimeMillis / 10000);
-        system.systemSimulate(maxInter, currentSeconds);
-    }
-    
-    private void addMessage(Message_17986494_Sepulveda mens){
+     
+    /**
+     *Método que añade un nuevo mensaje al chatHistory del usuario.
+     * 
+     * @param mens mensaje del usuario
+     */
+    public void addMessage(Message_17986494_Sepulveda mens){
         this.chatHistory.add(mens);
     }
 
+    /**
+     *Método que construye la síntesis de mensajes del usuario a partir de lo
+     * almacenado en el chatHistory de éste. Entrega la síntesis como un String
+     * 
+     * @return String con la síntesis de mensajes
+     */
+    public String generateSynthesis(){
+        if (this.getChatHistory().isEmpty()){
+            return "Usuario no tiene mensajes guardados";
+        }
+        String synthesis = "";
+        for (Message_17986494_Sepulveda mens: this.getChatHistory()){
+            synthesis = synthesis + mens.toString() + "\n";
+        }
+        return synthesis;
+    }
+    
     public String getUsername() {
         return username;
     }

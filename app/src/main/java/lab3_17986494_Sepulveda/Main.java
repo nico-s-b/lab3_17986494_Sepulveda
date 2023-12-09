@@ -3,14 +3,26 @@
  */
 package lab3_17986494_Sepulveda;
 
+import java.util.Scanner;
 
-//import lab3_17986494_Sepulveda.System_17986494_Sepulveda;
+/**
+ *Clase Main. Ejecución del programa
+ * @author nic_s
+ */
 
 public class Main {
+
+    /**
+     *Método main que es llamado al iniciar el programa. Construye un sistema vacío
+     * e inicializa un Scanner que será usado por el resto de la ejecución. Hace un llamado
+     * al primer menu del programa.
+     * @param args
+     */
     public static void main(String[] args) {        
         System_17986494_Sepulveda mySystem = new System_17986494_Sepulveda();
-        
-        MenusGeneral_17986494_Sepulveda.menuFirst(mySystem);
-        
+        Scanner input = new Scanner(System.in);
+        //Primer menu del programa
+        TemplateMenu_17986494_Sepulveda.menu(input,mySystem, PrintingMenuFunctions_17986494_Sepulveda::printMenuFirst, MenusGenerales_17986494_Sepulveda::handleMenuFirst);
+
     }
 }

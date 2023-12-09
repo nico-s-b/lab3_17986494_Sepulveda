@@ -20,11 +20,26 @@ public class Chatbot_17986494_Sepulveda extends Componente_17986494_Sepulveda{
     private int startFlowId;
     private ArrayList<Flow_17986494_Sepulveda> flows;
 
+    /**
+     *Constructor de Chatbot por defecto. Crea una instancia vacía de chatbot 
+     * sin atributos inicializados
+     */
     public Chatbot_17986494_Sepulveda(){
         super();
         this.flows = new ArrayList<>();
     }
 
+    /**
+     *Constructor de Chatbot inicializado. Permite construir una nueva instancia
+     * de chatbot a partir de sus parámetros de identificador, nombre, mensaje
+     * de bienvenida, identificador de flujo inicial y listado de flujos
+     * 
+     * @param id Código identificador del chatbot
+     * @param name Nombre del chatbot
+     * @param welcome Mensaje de bienvenida del chatbot
+     * @param flowId Código indentificador del flujo actual
+     * @param flows Listado de flujos del chatbot
+     */
     public Chatbot_17986494_Sepulveda(int id, String name, String welcome, int flowId, ArrayList<Flow_17986494_Sepulveda> flows){
         super(id);
         this.name = name;
@@ -34,14 +49,13 @@ public class Chatbot_17986494_Sepulveda extends Componente_17986494_Sepulveda{
         this.flows = Componente_17986494_Sepulveda.remDuplicates(flows);
     }
     
-/**
- * Método que añade un flujo a un chatbot, evitando añadir flujos duplicados
- * de acuerdo al Id de estos. Llama al método {@link Componente_17986494_Sepulveda#addComponent(java.util.ArrayList, lab3_17986494_Sepulveda.Componente_17986494_Sepulveda)}
- * para realizar la acción. Captura el error lanzado por dicho método.
- * @author nic_s
- * 
- * @param flow
- */
+    /**
+     * Método que añade un flujo a un chatbot, evitando añadir flujos duplicados
+     * de acuerdo al Id de estos. Llama al método {@link Componente_17986494_Sepulveda#addComponent(java.util.ArrayList, lab3_17986494_Sepulveda.Componente_17986494_Sepulveda)}
+     * para realizar la acción. Captura el error lanzado por dicho método.
+     * 
+     * @param flow flujo que se desea añadir
+     */
     public void chatbotAddFlow(Flow_17986494_Sepulveda flow){
         try{
             Componente_17986494_Sepulveda.addComponent(this.getFlows(), flow);
@@ -50,16 +64,15 @@ public class Chatbot_17986494_Sepulveda extends Componente_17986494_Sepulveda{
         }
     }
   
-/**
-  * Método que retorna un string que muestra el mensaje del flujo actual
-  * cargado en el chatbot y el listado de opciones de éste, de manera legible
-  * para que el usuario pueda interactuar con el chatbot.
-  * @author nic_s
-  * 
-  * @return String
-  */    
+    /**
+      * Método que retorna un string que muestra el mensaje del flujo actual
+      * cargado en el chatbot y el listado de opciones de éste, de manera legible
+      * para que el usuario pueda interactuar con el chatbot.
+      * 
+      * @return String
+      */    
     public String toPrint(){
-        String fl = "\n" + this.getActualFlow().getName() + "\n";
+        String fl = this.getActualFlow().getName() + "\n";
         String ops = "";
         for (Option_17986494_Sepulveda op: this.getActualFlow().getOptions()){
             ops = ops + op.getMessage() + "\n";
@@ -69,16 +82,15 @@ public class Chatbot_17986494_Sepulveda extends Componente_17986494_Sepulveda{
 
     @Override
     public String toString(){
-        String atr1 = String.format("Chatbot '%s'\nChatbot Id: %d / StartFlowId: %d\n",this.getName(),this.getId(),this.getStartFlowId());
+        String atr1 = String.format("Chatbot '%s'\nMensaje: %s\nChatbotId: %d / StartFlowId: %d\n",this.getName(),this.getWelcomeMessage(),this.getId(),this.getStartFlowId());
         String atr2 = String.format("# Flujos cargados: %d\n",this.getFlows().size());
         return atr1+atr2;
     }
 
-/**
- * Método que retorna el flow actual cargado en el chatbot, en función del
- * startFlowId vigente en el chatbot.
- * @author nic_s
- */
+    /**
+     * Método que retorna el flow actual cargado en el chatbot, en función del
+     * startFlowId vigente en el chatbot.
+     */
     private Flow_17986494_Sepulveda getActualFlow(){
         for (Flow_17986494_Sepulveda fl: this.getFlows()){
             if (fl.getId() == this.getStartFlowId()){

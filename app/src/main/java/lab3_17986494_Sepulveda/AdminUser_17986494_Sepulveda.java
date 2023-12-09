@@ -5,7 +5,9 @@
 package lab3_17986494_Sepulveda;
 
 /**
- *
+ * Clase de usuario administrador. El usuario administrador puede utilizar, solicitar
+ * y ver menus y métodos diferentes debido a su privilegio de administrador. Dichas
+ * acciones se encuentran manejadas por los menu.
  * @author nic_s
  */
 public class AdminUser_17986494_Sepulveda extends User_17986494_Sepulveda {
