@@ -13,7 +13,7 @@ public class PrintingMenuFunctions_17986494_Sepulveda {
 
     public static void printMenuFirst() {
         System.out.println("Bienvenido al sistema de Chatbots!\n");
-        System.out.print("1. Registre al usuario administrador \n");
+        System.out.print("1. Iniciar nuevo sistema \n");
         System.out.print("2. Probar demo del sistema \n");
         System.out.print("3. Salir\n");
     }    
@@ -31,7 +31,7 @@ public class PrintingMenuFunctions_17986494_Sepulveda {
         System.out.print("3. Agregar componentes disponibles\n");
         System.out.print("4. Interactuar con el sistema\n");
         System.out.print("5. Registrar usuarios\n");
-        System.out.print("6. Ver usuarios registrados\n");
+        System.out.print("6. Ver historiales de usuarios registrados\n");
         System.out.print("7. Cerrar sesion\n");
         System.out.print("8. Salir\n");
     }
@@ -43,15 +43,7 @@ public class PrintingMenuFunctions_17986494_Sepulveda {
         System.out.print("3. Crear una nueva opcion\n");
         System.out.print("4. Volver\n");
     }        
-
-    public static void printMenu(){
-        System.out.println("¿Que deseas hacer?\n");
-        System.out.print("1. Crear un nuevo chatbot\n");
-        System.out.print("2. Crear un nuevo flujo\n");
-        System.out.print("3. Crear una nueva opcion\n");
-        System.out.print("4. Volver\n");
-    }        
-    
+   
     public static void printMenuModificar(){
         System.out.println("¿Que deseas hacer?\n");
         System.out.print("1. Modificar un chatbot\n");
@@ -69,11 +61,11 @@ public class PrintingMenuFunctions_17986494_Sepulveda {
     }    
     
     public static void printMenuInteractUser(){
-        System.out.println("¿Qué deseas hacer?\n");
+        System.out.println("¿Que deseas hacer?\n");
         System.out.print("1. Iniciar una conversacion\n");
         System.out.print("2. Solicitar una simulacion\n");
         System.out.print("3. Solicitar sintesis de mis conversaciones\n");
-        System.out.print("4. Cerrar sesión\n");           
+        System.out.print("4. Cerrar sesion\n");           
     }
 
     public static void printMenuInteractAdmin(){
@@ -91,7 +83,7 @@ public class PrintingMenuFunctions_17986494_Sepulveda {
         System.out.print("3. Cambiar Codigo de Enlace a Flujo \n");
         System.out.print("4. Eliminar flujos \n");
         System.out.print("5. Agregar flujos \n");
-        System.out.print("6. Salir\n");
+        System.out.print("6. Volver\n");
     }      
 
     public static void printMenuModificarFlow() {
@@ -99,7 +91,7 @@ public class PrintingMenuFunctions_17986494_Sepulveda {
         System.out.print("1. Cambiar nombre\n");
         System.out.print("2. Eliminar opciones \n");
         System.out.print("3. Agregar opciones \n");
-        System.out.print("4. Salir\n");
+        System.out.print("4. Volver\n");
     }          
 
     public static void printMenuModificarOption() {
@@ -109,6 +101,6 @@ public class PrintingMenuFunctions_17986494_Sepulveda {
         System.out.print("3. Cambiar Codigo de Enlace a Flujo \n");
         System.out.print("4. Agregar palabra clave \n");
         System.out.print("5. Eliminar palabra clave \n");
-        System.out.print("6. Salir\n");
+        System.out.print("6. Volver\n");
     }      
 }

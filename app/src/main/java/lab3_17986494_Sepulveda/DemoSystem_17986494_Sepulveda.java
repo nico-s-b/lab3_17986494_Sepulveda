@@ -89,7 +89,7 @@ public class DemoSystem_17986494_Sepulveda {
         Option_17986494_Sepulveda op12 = new Option_17986494_Sepulveda(1, "1) Ver listado de tareas", 2, 2, op12keys);
 
         ArrayList<String> op13keys = new ArrayList<>(Arrays.asList("eventos","events"));
-        Option_17986494_Sepulveda op13 = new Option_17986494_Sepulveda(2, "2) Añadir tarea", 2, 1, op13keys);
+        Option_17986494_Sepulveda op13 = new Option_17986494_Sepulveda(2, "2) Agregar tarea", 2, 1, op13keys);
 
         ArrayList<String> op14keys = new ArrayList<>(Arrays.asList("cumpleaños", "cumples", "bday"));
         Option_17986494_Sepulveda op14 = new Option_17986494_Sepulveda(3, "3) Eliminar tarea", 2, 1, op14keys);
@@ -149,9 +149,10 @@ public class DemoSystem_17986494_Sepulveda {
         ArrayList<Chatbot_17986494_Sepulveda> systemchatbots = new ArrayList<>(Arrays.asList(chatbot0,chatbot1,chatbot2,chatbot3));
         System_17986494_Sepulveda demoSystem = new System_17986494_Sepulveda("Chatbot organizador", 0, systemchatbots);
 
-        demoSystem.registerUser("admin", true);
-        demoSystem.registerUser("user0", false);
-        demoSystem.systemLogin(demoSystem.getAdmin());
+        AdminUser_17986494_Sepulveda admin = new AdminUser_17986494_Sepulveda("admin");
+        demoSystem.getUsers().add(admin);
+        demoSystem.systemAddUser("user0");
+        demoSystem.systemLogin("admin");
         
         return demoSystem;
     }

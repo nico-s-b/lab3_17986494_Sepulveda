@@ -14,7 +14,7 @@ import java.util.ArrayList;
  * las keywords. Hereda de la clase {@link Componente_17986494_Sepulveda}
  * @author nic_s
  */
-public class Option_17986494_Sepulveda extends Componente_17986494_Sepulveda{
+public class Option_17986494_Sepulveda extends Componente_17986494_Sepulveda implements InterfaceOption_17986494_Sepulveda{
 
     private String message;
     private int chatbotCodeLink;
@@ -52,19 +52,7 @@ public class Option_17986494_Sepulveda extends Componente_17986494_Sepulveda{
             this.keywords.add(word.toLowerCase());
         }            
     }
-    
-    /**
-     * Método que añade palabras clave a la opción. Recibe strings, y verifica
-     * que éstas palabras no hayan sido añadidas previamente.
-     * 
-     * @param keyword
-     */
-    public void addKeyword(String keyword){
-        if (keyword != null && !this.getKeywords().contains(keyword)){
-            this.getKeywords().add(keyword);
-        }
-    }
-    
+
     @Override
     public String toString(){
         String atr1 = String.format("OptionId: %d 1| CbLink:%d / FlLink %d || Mens: '%s'",this.getId(), this.getChatbotCodeLink(), this.getFlowCodeLink(), this.getMessage());
@@ -74,6 +62,20 @@ public class Option_17986494_Sepulveda extends Componente_17986494_Sepulveda{
         }
         return atr1+atr2;
     }     
+    
+    /**
+     * Método que añade palabras clave a la opción. Recibe strings, y verifica
+     * que éstas palabras no hayan sido añadidas previamente.
+     * 
+     * @param keyword palabra clave
+     */
+    @Override
+    public void addKeyword(String keyword){
+        if (keyword != null && !this.getKeywords().contains(keyword)){
+            this.getKeywords().add(keyword);
+        }
+    }
+    
 
     /**
      * Método para verificar si un mensaje (en formato String) coincide con alguna
@@ -82,6 +84,7 @@ public class Option_17986494_Sepulveda extends Componente_17986494_Sepulveda{
      * @param mensaje String con el mensaje del usuario a comparar
      * @return true o false según si hay coincidencia o no
      */    
+    @Override
     public boolean optionMatch(String mensaje){
         return keywords.contains(mensaje) || mensaje.equals(Integer.toString(this.getId()));
     }

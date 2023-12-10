@@ -13,7 +13,7 @@ import java.util.ArrayList;
  * un identificador único dentro de un chatbot. Hereda de la clase {@link Componente_17986494_Sepulveda}
  * @author nic_s
  */
-public class Flow_17986494_Sepulveda extends Componente_17986494_Sepulveda{
+public class Flow_17986494_Sepulveda extends Componente_17986494_Sepulveda implements InterfaceFlow_17986494_Sepulveda{
     
     private String name;
     private ArrayList<Option_17986494_Sepulveda> options;
@@ -49,7 +49,8 @@ public class Flow_17986494_Sepulveda extends Componente_17986494_Sepulveda{
      * 
      * @param option opción que se desea añadir
      */
-    public void flowAddOption(Option_17986494_Sepulveda option){
+    @Override
+    public void flowAddOption(Option_17986494_Sepulveda option) {
         try{
             Componente_17986494_Sepulveda.addComponent(this.getOptions(), option);
         } catch (IllegalArgumentException e) {

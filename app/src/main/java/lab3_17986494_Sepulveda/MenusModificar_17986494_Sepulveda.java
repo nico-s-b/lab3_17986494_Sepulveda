@@ -23,8 +23,8 @@ public class MenusModificar_17986494_Sepulveda {
      * para luego llamar a través de inteface funcional al menú de ejecución de la modificación
      * de un chatbot.
      * 
-     * @param input
-     * @param sys
+     * @param input Scanner
+     * @param sys sistema
      */
     public static void menuModificarChatbot(Scanner input, System_17986494_Sepulveda sys){
         ArrayList<Chatbot_17986494_Sepulveda> todos = sys.getAllChatbots();
@@ -48,12 +48,12 @@ public class MenusModificar_17986494_Sepulveda {
      * de componente temporal del sistema y permite modificar todos sus atributos.
      * Utiliza la interface funcional de {@link TemplateMenu_17986494_Sepulveda#menu(java.util.Scanner, lab3_17986494_Sepulveda.System_17986494_Sepulveda, lab3_17986494_Sepulveda.TemplateMenu_17986494_Sepulveda.PrintMenuFunction, lab3_17986494_Sepulveda.TemplateMenu_17986494_Sepulveda.SwitchMenuFunction) }
      * 
-     * @param choice
-     * @param sys
-     * @param input
-     * @param returnToPrev
+     * @param choice opción
+     * @param sys sistema
+     * @param input Scanner
+     * @param returnToPrev bool (volver al menú anterior?)
      */
-    public static void handleMenuModificarChatbot(int choice, System_17986494_Sepulveda sys, Scanner input, MutableBool returnToPrev){
+    public static void handleMenuModificarChatbot(int choice, System_17986494_Sepulveda sys, Scanner input, MutableBool_17986494_Sepulveda returnToPrev){
         Chatbot_17986494_Sepulveda chatbot = (Chatbot_17986494_Sepulveda) sys.getComponenteTemporal();
         switch (choice){
             case 1:
@@ -144,8 +144,8 @@ public class MenusModificar_17986494_Sepulveda {
      * para luego llamar a través de inteface funcional al menú de ejecución de la modificación
      * de un flujo.
      * 
-     * @param input
-     * @param sys
+     * @param input Scanner
+     * @param sys sistema
      */
     public static void menuModificarFlow(Scanner input, System_17986494_Sepulveda sys){
         ArrayList<Flow_17986494_Sepulveda> todos = sys.getAllFlows();
@@ -167,14 +167,14 @@ public class MenusModificar_17986494_Sepulveda {
     /**
      *Menú de modificación de un chatbot. Toma el componente cargado en el atributo
      * de componente temporal del sistema y permite modificar todos sus atributos.
-     * Utiliza la interface funcional de {@link TemplateMenu_17986494_Sepulveda#menu(java.util.Scanner, lab3_17986494_Sepulveda.System_17986494_Sepulveda, lab3_17986494_Sepulveda.TemplateMenu_17986494_Sepulveda.PrintMenuFunction, lab3_17986494_Sepulveda.TemplateMenu_17986494_Sepulveda.SwitchMenuFunction) 
+     * Utiliza la interface funcional de {@link TemplateMenu_17986494_Sepulveda#menu(java.util.Scanner, lab3_17986494_Sepulveda.System_17986494_Sepulveda, lab3_17986494_Sepulveda.TemplateMenu_17986494_Sepulveda.PrintMenuFunction, lab3_17986494_Sepulveda.TemplateMenu_17986494_Sepulveda.SwitchMenuFunction)} 
      * 
-     * @param choice
-     * @param sys
-     * @param input
-     * @param returnToPrev
+     * @param choice opción
+     * @param sys sistema
+     * @param input Scanner
+     * @param returnToPrev bool (volver al menú anterior?)
      */
-    public static void handleMenuModificarFlow(int choice, System_17986494_Sepulveda sys, Scanner input, MutableBool returnToPrev){
+    public static void handleMenuModificarFlow(int choice, System_17986494_Sepulveda sys, Scanner input, MutableBool_17986494_Sepulveda returnToPrev){
         Flow_17986494_Sepulveda flow = (Flow_17986494_Sepulveda) sys.getComponenteTemporal();
         switch (choice){
             case 1:
@@ -223,7 +223,6 @@ public class MenusModificar_17986494_Sepulveda {
                 //Agregar opciones
                 ArrayList<Option_17986494_Sepulveda> options = Componente_17986494_Sepulveda.<Option_17986494_Sepulveda>filterComponent(
                                                              sys.getComponentes(), Option_17986494_Sepulveda.class);
-
                  System.out.println("Seleccionar opcion que se desea agregar");
                  Option_17986494_Sepulveda opcion = MenusSeleccionar_17986494_Sepulveda.menuSelectOption(input, sys, options);
 
@@ -249,8 +248,8 @@ public class MenusModificar_17986494_Sepulveda {
      * para luego llamar a través de inteface funcional al menú de ejecución de la modificación
      * de una opción.
      * 
-     * @param input
-     * @param sys
+     * @param input Scanner
+     * @param sys sistema
      */
     public static void menuModificarOption(Scanner input, System_17986494_Sepulveda sys){
         ArrayList<Option_17986494_Sepulveda> todos = sys.getAllOptions();
@@ -272,14 +271,14 @@ public class MenusModificar_17986494_Sepulveda {
     /**
      *Menú de modificación de un chatbot. Toma el componente cargado en el atributo
      * de componente temporal del sistema y permite modificar todos sus atributos.
-     * Utiliza la interface funcional de {@link TemplateMenu_17986494_Sepulveda#menu(java.util.Scanner, lab3_17986494_Sepulveda.System_17986494_Sepulveda, lab3_17986494_Sepulveda.TemplateMenu_17986494_Sepulveda.PrintMenuFunction, lab3_17986494_Sepulveda.TemplateMenu_17986494_Sepulveda.SwitchMenuFunction) 
+     * Utiliza la interface funcional de {@link TemplateMenu_17986494_Sepulveda#menu(java.util.Scanner, lab3_17986494_Sepulveda.System_17986494_Sepulveda, lab3_17986494_Sepulveda.TemplateMenu_17986494_Sepulveda.PrintMenuFunction, lab3_17986494_Sepulveda.TemplateMenu_17986494_Sepulveda.SwitchMenuFunction) }
      * 
-     * @param choice
-     * @param sys
-     * @param input
-     * @param returnToPrev
+     * @param choice opción
+     * @param sys sistema
+     * @param input Scanner
+     * @param returnToPrev bool (volver al menú anterior?)
      */
-    public static void handleMenuModificarOption(int choice, System_17986494_Sepulveda sys, Scanner input, MutableBool returnToPrev){
+    public static void handleMenuModificarOption(int choice, System_17986494_Sepulveda sys, Scanner input, MutableBool_17986494_Sepulveda returnToPrev){
         Option_17986494_Sepulveda option = (Option_17986494_Sepulveda) sys.getComponenteTemporal();
         switch (choice){
             case 1:

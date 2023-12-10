@@ -16,7 +16,7 @@ public class Main {
      *Método main que es llamado al iniciar el programa. Construye un sistema vacío
      * e inicializa un Scanner que será usado por el resto de la ejecución. Hace un llamado
      * al primer menu del programa.
-     * @param args
+     * @param args argumentos del sistema
      */
     public static void main(String[] args) {        
         System_17986494_Sepulveda mySystem = new System_17986494_Sepulveda();

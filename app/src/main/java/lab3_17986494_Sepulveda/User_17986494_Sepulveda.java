@@ -14,7 +14,6 @@ import java.util.ArrayList;
 public abstract class User_17986494_Sepulveda {
     private final String username;
     private ArrayList<Message_17986494_Sepulveda> chatHistory;
-    private boolean admin;
     
     User_17986494_Sepulveda(String username){
         this.username = username;
@@ -56,14 +55,6 @@ public abstract class User_17986494_Sepulveda {
         return username;
     }
 
-    public boolean isAdmin(){
-        return this.admin;
-    }
-    
-    public void setAdmin(boolean isAdmin){
-        this.admin = isAdmin;
-    }
-    
     public ArrayList<Message_17986494_Sepulveda> getChatHistory() {
         return chatHistory;
     }

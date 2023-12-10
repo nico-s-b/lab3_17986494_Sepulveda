@@ -18,18 +18,20 @@ import java.util.ArrayList;
 public abstract class Componente_17986494_Sepulveda {
     protected int id;
     
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }    
-
+    /**
+    * Constructor de Componente inicializado. Construye una instancia de componente
+    * con un id asociado.
+    * 
+    * @param id id del componente a crear
+    */    
     public Componente_17986494_Sepulveda(int id) {
         this.id = id;
     }
 
+    /**
+    * Constructor de Componente por defecto. Construye una instancia de componente
+    * sin inicializar.
+    */        
     public Componente_17986494_Sepulveda() {}    
     
     /**
@@ -136,5 +138,13 @@ public abstract class Componente_17986494_Sepulveda {
         }
         return newList;
     }
+    
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }    
     
 }

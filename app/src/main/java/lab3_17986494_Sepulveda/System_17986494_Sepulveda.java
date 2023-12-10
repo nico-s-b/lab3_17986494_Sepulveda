@@ -7,24 +7,23 @@ package lab3_17986494_Sepulveda;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
-import java.util.Scanner;
 
 /**
  *Clase para Sistema. Contiene el conjunto de chatbots asociados a un sistema, 
  * con los métodos necesarios para interactuar con ellos y para gestionar usuarios.
  * @author nic_s
  */
-public class System_17986494_Sepulveda {
+public class System_17986494_Sepulveda implements InterfaceSystem_17986494_Sepulveda{
     private String name;
     private int chatbotCodeLink;
     private ArrayList<Chatbot_17986494_Sepulveda> chatbots;
     private ArrayList<User_17986494_Sepulveda> users;   //Listado de usuarios registrados
     private boolean logState;       //Señala si hay un usuario actualmente loggeado
-    private boolean logAdmin;       //Señala si el administrador está o no actualmente loggeado
-    private String loggedUser;      //Nombre del usuario actualmente loggeado en sistema
+    private User_17986494_Sepulveda loggedUser;      //Nombre del usuario actualmente loggeado en sistema
     private ArrayList<Componente_17986494_Sepulveda> componentesDisponibles;    //Componentes creados pero que no se han añadido al sistema
     private Componente_17986494_Sepulveda componenteTemporal;   //Componente temporal: usado como variable para guardar componente que se desee modificar
     private Date fechaCreacion;     //Fecha de gración del sistema
+    private Date interactDate;
 
     /**
      *Constructor de System por defecto. Entrega un sistema en blanco sin sesion
@@ -36,8 +35,7 @@ public class System_17986494_Sepulveda {
         this.chatbots = new ArrayList<>();
         this.users = new ArrayList<>();
         this.logState = false;
-        this.logAdmin = false;
-        this.loggedUser = "";
+        this.loggedUser = null;
         this.componentesDisponibles = new ArrayList<>();
         this.fechaCreacion = new Date();
         this.componenteTemporal = null;
@@ -57,8 +55,6 @@ public class System_17986494_Sepulveda {
         this.chatbots = Componente_17986494_Sepulveda.remDuplicates(chatbots);
         this.users = new ArrayList<>();
         this.logState = false;
-        this.logAdmin = false;
-        this.loggedUser = "";
         this.componentesDisponibles = new ArrayList<>();
         this.fechaCreacion = new Date();  
     }
@@ -70,6 +66,7 @@ public class System_17986494_Sepulveda {
      * 
      * @param chatbot chatbot que se desea añadir
      */
+    @Override
     public void systemAddChatbot(Chatbot_17986494_Sepulveda chatbot){
         try{
             Componente_17986494_Sepulveda.addComponent(this.getChatbots(), chatbot);
@@ -79,30 +76,21 @@ public class System_17986494_Sepulveda {
     }
 
     /**
-     * Método para registrar usuarios nuevos al sistema.Recibe un nombre de usuario 
-     * y si éste tendrá o no privilegios de administrador.Crea un nuevo usuario
-     * y lo añade al sistema utilizando el método {@link #systemAddUser(lab3_17986494_Sepulveda.User_17986494_Sepulveda)}
+     * Método para registrar usuarios nuevos al sistema. Recibe un nombre de usuario 
+     * y verifica si el nombre de usuario ya existe en el sistema. Crea un nuevo 
+     * usuario y lo añade al sistema en caso de poder registrarse el nuevo usuario.
      * 
-     * @param username nombre del nuevo usuario
-     * @param isAdmin booleano que indica si el nuevo usuario será o no administrador
+     * @param user nombre del nuevo usuario
      */
-    public void registerUser(String username, boolean isAdmin){
-        User_17986494_Sepulveda user;
-        if (isAdmin){
-            user = new AdminUser_17986494_Sepulveda(username);
-        }else{
-            user = new NormalUser_17986494_Sepulveda(username);
-        }
-        this.systemAddUser(user);
-    }
-     
-    private void systemAddUser(User_17986494_Sepulveda user){
+    @Override
+    public void systemAddUser(String user){
         for (User_17986494_Sepulveda us : this.getUsers()){
-            if (us.getUsername().equals(user.getUsername())){
+            if (us.getUsername().equals(user)){
                 throw new IllegalArgumentException("Ya existe un usuario con el mismo nombre en el sistema.");
             }
         }
-        this.getUsers().add(user);
+        NormalUser_17986494_Sepulveda newUser = new NormalUser_17986494_Sepulveda(user);
+        this.getUsers().add(newUser);
     }
 
     /**
@@ -114,16 +102,14 @@ public class System_17986494_Sepulveda {
      * 
      * @param user instancia de usuario que desea iniciar sesión
      */
-    public void systemLogin(User_17986494_Sepulveda user){
+    @Override
+    public void systemLogin(String user){
         if (this.isLogState()){
             throw new IllegalStateException("Ya existe una sesion iniciada en el sistema.");
         }
         if (userInSystem(user)){
             this.setLogState(true);
-            this.setLoggedUser(user.getUsername());
-            if (user.isAdmin()){
-                this.setLogAdmin(true);
-            }
+            this.setLoggedUser(this.getUser(user));
         }else{
             throw new IllegalArgumentException("El usuario que intenta iniciar sesión no esta registrado en el sistema.");
         }
@@ -132,12 +118,13 @@ public class System_17986494_Sepulveda {
     /**
      * Método que busca si un usuario dado está o no registrado en el sistema
      * 
-     * @param username nombre del usuario a buscar
+     * @param user nombre del usuario a buscar
      * @return boolean 
      */    
-    private boolean userInSystem(User_17986494_Sepulveda user){
+    @Override
+    public boolean userInSystem(String user){
         for (User_17986494_Sepulveda us : this.getUsers()){
-            if (us.getUsername().equals(user.getUsername())){
+            if (us.getUsername().equals(user)){
                 return true;
             }
         }
@@ -148,11 +135,11 @@ public class System_17986494_Sepulveda {
      * Método para cerrar sesión, cambiando todos los parámetros necesarios del sistema
      * @throws IllegalStateException si no hay una sesión iniciada 
      */
+    @Override
     public void systemLogout(){
         if (this.isLogState()){
             this.setLogState(false);
-            this.setLogAdmin(false);
-            this.setLoggedUser("");
+            this.setLoggedUser(null);
             this.setChatbotCodeLink(0);
         }else{
             throw new IllegalStateException("No hay sesion iniciada en el sistema.");
@@ -160,55 +147,36 @@ public class System_17986494_Sepulveda {
     }
 
     /**
-     * Método que ejecuta una conversación con los chatbots disponible en el sistema
+     * Método que ejecuta una conversación con los chatbots disponible en el sistema.
     Requiere una sesión inciada para iniciar la conversación. Construye en cada
     interacción un mensaje que será añadido al historial del usuario.
     En cada interacción, actualiza los códigos de chatbot y flow según la opción
     del usuario o le pregunta de nuevo en caso de entrada no válida. Permite
     terminar la interacción completamente con la palabra clave "exit"
      * 
-     * @param input scanner para entradas de usuario
+     * @param option String con entrada de usuario
      */    
-    public void systemTalk(Scanner input){
-        this.setChatbotCodeLink(0); //Devolver chatbot del sistema a 0
-        //Verificar inicio de sesión previo a interacción
-        if(!this.isLogState()){
-            System.out.print("Sesion no iniciada, no es posible interactuar");
-            return;
-        }
-        boolean continueInteraction = true;
-
-        while(continueInteraction){
-            Date systemDate = new Date();   //fecha de la pregunta
-            String menu = this.getActualChatbot().toPrint();
-            System.out.print(menu);
-            System.out.print("Ingrese opcion: ");
-            String option = input.nextLine();
-            System.out.print("\n");
-            Date userDate = new Date();     //Fecha de la respuesta
-            //Construcción de mensaje
-            Message_17986494_Sepulveda newMens = new Message_17986494_Sepulveda(systemDate, userDate, menu, option, this.loggedUser);
-            this.getUser(this.loggedUser).addMessage(newMens);
-            if (option.toLowerCase().equals("exit")) {
-                continueInteraction = false;
-            }else{
-                boolean opcionReconocida = false;
-                for (Option_17986494_Sepulveda op: this.getActualFlow().getOptions()){
-                    if (op.optionMatch(option)){
-                        this.setChatbotCodeLink(op.getChatbotCodeLink());
-                        for (Chatbot_17986494_Sepulveda cb: this.getChatbots()){
-                            if (cb.getId() == op.getChatbotCodeLink()){
-                                cb.setStartFlowId(op.getFlowCodeLink());
-                            }
-                        }
-                        opcionReconocida = true;
-                        break;
+    @Override
+    public void systemTalk(String option){          
+        Date userDate = new Date();     //Fecha de la respuesta
+        //Construcción de mensaje
+        Message_17986494_Sepulveda newMens = new Message_17986494_Sepulveda(this.getInteractDate(), userDate, this.getActualChatbot().toPrint(), option, this.getLoggedUser().getUsername());
+        this.getLoggedUser().addMessage(newMens);
+        boolean opcionReconocida = false;
+        for (Option_17986494_Sepulveda op: this.getActualChatbot().getActualFlow().getOptions()){
+            if (op.optionMatch(option)){
+                this.setChatbotCodeLink(op.getChatbotCodeLink());
+                for (Chatbot_17986494_Sepulveda cb: this.getChatbots()){
+                    if (cb.getId() == op.getChatbotCodeLink()){
+                        cb.setStartFlowId(op.getFlowCodeLink());
                     }
                 }
-                if (!opcionReconocida) {
-                    System.out.println("Opcion no reconocida. Intente otra vez");
-                }
+                opcionReconocida = true;
+                break;
             }
+        }
+        if (!opcionReconocida) {
+            System.out.println("Opcion no reconocida. Intente otra vez");
         }
     }
 
@@ -227,25 +195,32 @@ public class System_17986494_Sepulveda {
     * @param maxInter cantidad de interacciones solicitadas
     * @param user usuario ficticio creado por {@link #systemSimulate(int, int) }
      */     
-    public void systemTalk(int seed, int maxInter, User_17986494_Sepulveda user){
+    @Override
+    public void systemTalk(int seed, int maxInter, String user){
         this.setChatbotCodeLink(0); //Devolver chatbot del sistema a 0
         Random random = new Random(seed);       //Random a partir de semilla
         for(int i = 0; i < maxInter; i++){
             Date systemDate = new Date();
-            String menu = this.getActualChatbot().toPrint();
+            String menu;
+            try{
+                menu = this.getActualChatbot().toPrint();
+            }catch (NullPointerException e) {
+                System.out.println("\nNo hay chatbots en el sistema! No se puede interactuar.");
+                return;
+            }
             System.out.print(menu);
-            System.out.print("user '" + user.getUsername() + " dice: ");
+            System.out.print("user '" + user + "' dice: ");
 
             //se generan valores aleatorios entre 1 y el número de opciones del flow
-            int opt = random.nextInt(this.getActualFlow().getOptions().size()) + 1;
+            int opt = random.nextInt(this.getActualChatbot().getActualFlow().getOptions().size()) + 1;
             String option = Integer.toString(opt);
             System.out.print(option + "\n");
             System.out.print("\n");
             Date userDate = new Date();
-            Message_17986494_Sepulveda newMens = new Message_17986494_Sepulveda(systemDate, userDate, menu, option, user.getUsername());
-            user.addMessage(newMens);
+            Message_17986494_Sepulveda newMens = new Message_17986494_Sepulveda(systemDate, userDate, menu, option, user);
+            this.getUser(user).addMessage(newMens);
             boolean opcionReconocida = false;
-            for (Option_17986494_Sepulveda op: this.getActualFlow().getOptions()){
+            for (Option_17986494_Sepulveda op: this.getActualChatbot().getActualFlow().getOptions()){
                 if (op.optionMatch(option)){
                     this.setChatbotCodeLink(op.getChatbotCodeLink());
                     for (Chatbot_17986494_Sepulveda cb: this.getChatbots()){
@@ -265,50 +240,44 @@ public class System_17986494_Sepulveda {
     }    
     
     /**
+     *Método para solicitar una simulación de una simulación de interacciones con
+     * el sistema de chatbots. Crea un usuario ficticio que será empleado para
+     * realizar la simulación. Este usuario quedará añadido en el sistema, con su
+     * correspondiente historial de conversación. Llama a método sobrecargado de
+     * {@link #systemTalk(int, int, String) }
+     * 
+     * @param maxInter cantidad de interacciones solicitadas
+     * @param seed semilla para generar opciones aleatorias
+     */
+    @Override
+    public void systemSimulate(int maxInter, int seed){
+        String fakeUser = "user" + Integer.toString(seed);
+        try{
+            this.systemAddUser(fakeUser);
+        }catch (IllegalArgumentException e){ } //Do nothing
+        systemTalk(seed, maxInter, fakeUser);
+    }
+
+    /**
      *Función que hace imprime la síntesis del historial de conversaciones de un
      * usuario. La lógica de la generación del mensaje se encuentra en el método
      * de la clase usuario para manejar su propio historia de mensajes. 
      * Ver {@link User_17986494_Sepulveda#generateSynthesis() }
      * 
-     * @param user
+     * @param user nombre del usuario que desea la síntesis
      */
-    public void systemSynthesis(User_17986494_Sepulveda user){
-        System.out.println(user.generateSynthesis());
+    @Override
+    public void systemSynthesis(String user){
+        System.out.println(this.getUser(user).generateSynthesis());
     }
-
-    /**
-     *Método para solicitar una simulación de una simulación de interacciones con
-     * el sistema de chatbots. Crea un usuario ficticio que será empleado para
-     * realizar la simulación. Este usuario quedará añadido en el sistema, con su
-     * correspondiente historial de conversación. Llama a método sobrecargado de
-     * {@link #systemTalk(int, int, lab3_17986494_Sepulveda.User_17986494_Sepulveda) }
-     * 
-     * @param maxInter cantidad de interacciones solicitadas
-     * @param seed semilla para generar opciones aleatorias
-     */
-    public void systemSimulate(int maxInter, int seed){
-        String fakeUser = "user" + Integer.toString(seed);
-        NormalUser_17986494_Sepulveda user = new NormalUser_17986494_Sepulveda(fakeUser);
-        this.systemAddUser(user);
-        systemTalk(seed, maxInter, user);
-    }
-
-    /**
-     * Método para imprimir el listado de todos los usuarios registrados en el sistema
-     */        
-    public void registeredUsers(){
-        for (User_17986494_Sepulveda us : this.getUsers()){
-            System.out.print(us);
-            System.out.print("\n");
-        }
-    }
-
+    
     /**
      * Método que agrega un componente (chatbot, flujo, opcion) a la lista de componentes
      * disponibles para uso del sistema.
      * 
      * @param comp componente que se desea añadir
      */
+    @Override
     public void addComponente(Componente_17986494_Sepulveda comp){
         this.componentesDisponibles.add(comp);
     }
@@ -319,9 +288,10 @@ public class System_17986494_Sepulveda {
      * 
      * @return user Instancia del usuario administrador encontrada
      */    
+    @Override
     public User_17986494_Sepulveda getAdmin(){
         for (User_17986494_Sepulveda us : this.getUsers()){
-            if (us.isAdmin()){
+            if (us instanceof AdminUser_17986494_Sepulveda){
                 return us;
             }
         }
@@ -335,6 +305,7 @@ public class System_17986494_Sepulveda {
      * @param username String con el nombre del usuario buscado.
      * @return user Instancia de usuario encontrada
      */        
+    @Override
     public User_17986494_Sepulveda getUser(String username){
         for (User_17986494_Sepulveda us : this.getUsers()){
             if (us.getUsername().equals(username) ){
@@ -351,6 +322,7 @@ public class System_17986494_Sepulveda {
      * 
      * @return listado de chatbots 
      */        
+    @Override
     public ArrayList<Chatbot_17986494_Sepulveda> getAllChatbots(){
         ArrayList<Chatbot_17986494_Sepulveda> list = new ArrayList<>();
         for (Chatbot_17986494_Sepulveda cb: this.getChatbots()){
@@ -371,6 +343,7 @@ public class System_17986494_Sepulveda {
      * 
      * @return listado de flujos
      */      
+    @Override
     public ArrayList<Flow_17986494_Sepulveda> getAllFlows(){
         ArrayList<Flow_17986494_Sepulveda> list = new ArrayList<>();
         for (Chatbot_17986494_Sepulveda cb: this.getChatbots()){
@@ -393,6 +366,7 @@ public class System_17986494_Sepulveda {
      * 
      * @return listado de opciones
      */         
+    @Override
     public ArrayList<Option_17986494_Sepulveda> getAllOptions(){
         ArrayList<Option_17986494_Sepulveda> list = new ArrayList<>();
         for (Chatbot_17986494_Sepulveda cb: this.getChatbots()){
@@ -417,28 +391,11 @@ public class System_17986494_Sepulveda {
      * 
      * @return instancia de chatbot
      */  
+    @Override
     public Chatbot_17986494_Sepulveda getActualChatbot(){
         for (Chatbot_17986494_Sepulveda cb: this.getChatbots()){
             if (cb.getId() == this.getChatbotCodeLink()){
                 return cb;
-            }
-        }
-        return null;
-    }
-    
-    /**
-     * Método para obtener el flujo actual del sistema. Utiliza el método
-     * {@link System_17986494_Sepulveda#getActualChatbot() } para ubicar el chatbot
-     * que se encuentra disponible en el sistema, para luego, dentro de éste,
-     * ubicar el flujo actual a partir del atributo {@link Chatbot_17986494_Sepulveda#startFlowId}.
-     * 
-     * @return instancia de flujo
-     */  
-    public Flow_17986494_Sepulveda getActualFlow(){
-        Chatbot_17986494_Sepulveda cb = this.getActualChatbot();
-        for (Flow_17986494_Sepulveda fl: cb.getFlows()){
-            if (fl.getId() == cb.getStartFlowId()){
-                return fl;
             }
         }
         return null;
@@ -461,7 +418,15 @@ public class System_17986494_Sepulveda {
    public ArrayList<Chatbot_17986494_Sepulveda> getChatbots() {
         return chatbots;
     }
+   
+    public Date getInteractDate() {
+        return interactDate;
+    }
 
+    public void setInteractDate(Date interactDate) {
+        this.interactDate = interactDate;
+    }
+    
     public ArrayList<User_17986494_Sepulveda> getUsers() {
         return users;
     }
@@ -472,6 +437,7 @@ public class System_17986494_Sepulveda {
 
      /**
      * Método para consultar si existe una sesión iniciada en el sistema
+     * 
      * @return boolean
      */    
     public boolean isLogState() {
@@ -483,32 +449,22 @@ public class System_17986494_Sepulveda {
     }
 
      /**
-     * Método para consultar si el administrador ha iniciado sesión en el sistema
-     * @return boolean
-     */
-    public boolean isLogAdmin() {
-        return logAdmin;
-    }
-
-    public void setLogAdmin(boolean logAdmin) {
-        this.logAdmin = logAdmin;
-    }    
-
-     /**
      * Retorna nombre de usuario con sesión iniciada. 
+     * 
      * @return nombre del usuario con sesión iniciada
      */    
-    public String getLoggedUser() {
+    public User_17986494_Sepulveda getLoggedUser() {
         return loggedUser;
     }
   
-    public void setLoggedUser(String loggedUser) {
+    public void setLoggedUser(User_17986494_Sepulveda loggedUser) {
         this.loggedUser = loggedUser;
     }
 
      /**
      * Retorna componente temporal guardado en sistema. Útil para modificar componentes
      * en específico. Utilizado en los menus de modificación.
+     * 
      * @return componente temporal guardado en sistema
      */      
     public Componente_17986494_Sepulveda getComponenteTemporal() {

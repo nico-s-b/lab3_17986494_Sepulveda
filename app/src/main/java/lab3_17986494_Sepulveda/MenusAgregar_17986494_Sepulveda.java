@@ -20,8 +20,8 @@ public class MenusAgregar_17986494_Sepulveda {
      * desde la lista de chatbots disponibles para ser luego añadido al sistema. 
      * Se evita la inclusión de duplicaciones al usar el método {@link System_17986494_Sepulveda#systemAddChatbot(lab3_17986494_Sepulveda.Chatbot_17986494_Sepulveda) }
      * 
-     * @param input
-     * @param sys
+     * @param input Scanner
+     * @param sys sistema
      */
     public static void menuAgregarChatbot(Scanner input, System_17986494_Sepulveda sys){
         ArrayList<Chatbot_17986494_Sepulveda> chatbots = Componente_17986494_Sepulveda.<Chatbot_17986494_Sepulveda>filterComponent(
@@ -42,8 +42,8 @@ public class MenusAgregar_17986494_Sepulveda {
      * existente en el sitema para ser añadido a éste.
      * Se evita la inclusión de duplicaciones al usar el método {@link Chatbot_17986494_Sepulveda#chatbotAddFlow(lab3_17986494_Sepulveda.Flow_17986494_Sepulveda) }
      * 
-     * @param input
-     * @param sys
+     * @param input Scanner
+     * @param sys sistema
      */
     public static void menuAgregarFlow(Scanner input, System_17986494_Sepulveda sys){
         ArrayList<Flow_17986494_Sepulveda> flows = Componente_17986494_Sepulveda.<Flow_17986494_Sepulveda>filterComponent(
@@ -74,8 +74,8 @@ public class MenusAgregar_17986494_Sepulveda {
      * existente en el sitema para ser añadida a éste.
      * Se evita la inclusión de duplicaciones al usar el método {@link Flow_17986494_Sepulveda#flowAddOption(lab3_17986494_Sepulveda.Option_17986494_Sepulveda)  }
      * 
-     * @param input
-     * @param sys
+     * @param input Scanner
+     * @param sys sistema
      */
     public static void menuAgregarOption(Scanner input, System_17986494_Sepulveda sys){
         ArrayList<Option_17986494_Sepulveda> options = Componente_17986494_Sepulveda.<Option_17986494_Sepulveda>filterComponent(

@@ -4,7 +4,6 @@
  */
 package lab3_17986494_Sepulveda;
 
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
@@ -41,7 +40,7 @@ public interface TemplateMenu_17986494_Sepulveda {
          * @param input el objeto Scanner para leer la entrada del usuario
          * @param returnToPrevMenu MutableBool para controlar el regreso al menú anterior
          */            
-        void execute(int choice, System_17986494_Sepulveda sys, Scanner input, MutableBool returnToPrevMenu);
+        void menuHandle(int choice, System_17986494_Sepulveda sys, Scanner input, MutableBool_17986494_Sepulveda returnToPrevMenu);
     }
  
     /**
@@ -51,51 +50,22 @@ public interface TemplateMenu_17986494_Sepulveda {
      * 
      * @param input Scanner de inputs
      * @param sys sistema sobre el que se ejecutan las acciones
-     * @param menuPrint función para imprimir un menú
-     * @param menuHandle función que maneja el switch de opciones del menú
+     * @param menuPrint método para imprimir un menú
+     * @param menuHandle método que maneja el switch de opciones del menú
      */
     public static void menu(Scanner input, System_17986494_Sepulveda sys, PrintMenuFunction menuPrint, SwitchMenuFunction menuHandle) {
-        MutableBool returnToPrevMenu = new MutableBool(false);
-        //int choice = 0; //Variable usada para el switch dentro del menuHandle
-
+        MutableBool_17986494_Sepulveda returnToPrevMenu = new MutableBool_17986494_Sepulveda(false);
         while (!returnToPrevMenu.valor) {
-            //Función que imprime el menú deseado
+            //Llamado a método que imprime el menú deseado
             menuPrint.printMenu();
             System.out.print("Ingrese opcion: ");
             try {
                 int choice = Integer.parseInt(input.nextLine().trim());
-                menuHandle.execute(choice, sys, input, returnToPrevMenu);
+                //Llamado a método que ejecuta la lógica del menú deseado
+                menuHandle.menuHandle(choice, sys, input, returnToPrevMenu);
             } catch (NumberFormatException e) {
                 System.out.println("Por favor, ingrese un numero valido.");
             }
-                /*
-                if (input.hasNextInt()) {
-                    choice = Integer.parseInt(input.nextLine());
-                    //choice = input.nextInt();
-                    //input.nextLine();  //Limpiar buffer tras leer entero
-                    //Funcion que contiene la lógica del menú deseado
-                    menuHandle.execute(choice, sys, input, returnToPrevMenu);
-                } else {
-                    System.out.println("Por favor, ingrese un numero.");
-                    //input.nextLine();  // Limpiar el buffer si la entrada no es un entero
-                }  
-            } catch (InputMismatchException e) {
-                System.out.println("Recuerde ingresar opciones numericas. Por favor intentelo de nuevo.");
-                //input.nextLine(); // Limpiar el buffer si se produce una excepción
-                */
-         //   }catch (NumberFormatException e) {
-         //       System.out.println("Por favor, ingrese un numero valido.");
-         //   }
         }
-    }
-}
-
-//Clase para un boolean que pueda mutar. Útil para pasar un objeto booleano a través 
-//de diferentes instancias o como argumento a métodos
-class MutableBool {
-    boolean valor;
-
-    MutableBool(boolean valor) {
-        this.valor = valor;
     }
 }

@@ -20,10 +20,10 @@ public class MenusSeleccionar_17986494_Sepulveda {
      * de chatbot, inicia una interacción con el usuario que le permite seleccionar
      * uno de los chatbots de la lista.
      * 
-     * @param input
-     * @param sys
-     * @param todos
-     * @return
+     * @param input Scanner
+     * @param sys sistema
+     * @param todos lista de chatbots
+     * @return chatbot escogido
      */
     public static Chatbot_17986494_Sepulveda menuSelectChatbot(Scanner input, System_17986494_Sepulveda sys, ArrayList<Chatbot_17986494_Sepulveda> todos){
         if (todos.isEmpty()){
@@ -37,14 +37,16 @@ public class MenusSeleccionar_17986494_Sepulveda {
             System.out.println(String.format("%d) %s",i,comp.getName()));
             i++;
         }
-        System.out.println("\n\nIngresa el numero del chatbot deseado: \n(Ingrese 0 para cancelar)");
+        System.out.println("\nIngresa el numero del chatbot deseado: \n(Ingrese 0 para cancelar)");
         System.out.print("Numero de chatbot: ");
         int index;
         Chatbot_17986494_Sepulveda chatbot = null;
+        input.nextLine();
         boolean isActionCompleted = false;
         while (!isActionCompleted) {
             try {
                 index = input.nextInt();
+                input.nextLine();
                 if (index == 0) { //Cancelar operación
                     isActionCompleted = true;
                 }
@@ -67,10 +69,10 @@ public class MenusSeleccionar_17986494_Sepulveda {
      * de flujos, inicia una interacción con el usuario que le permite seleccionar
      * uno de los flujos de la lista.
      * 
-     * @param input
-     * @param sys
-     * @param todos
-     * @return
+     * @param input Scanner
+     * @param sys sistema
+     * @param todos lista de flujos
+     * @return flujo escogido
      */
     public static Flow_17986494_Sepulveda menuSelectFlow(Scanner input, System_17986494_Sepulveda sys, ArrayList <Flow_17986494_Sepulveda> todos){
         if (todos.isEmpty()){
@@ -84,14 +86,16 @@ public class MenusSeleccionar_17986494_Sepulveda {
             System.out.println(String.format("%d) %s",i,comp.getName()));
             i++;
         }
-        System.out.println("\n\nIngresa el numero del flujo deseado: \n(Ingrese 0 para cancelar)");
+        System.out.println("\nIngresa el numero del flujo deseado: \n(Ingrese 0 para cancelar)");
         System.out.print("Numero de flujo: ");
         int index;
         Flow_17986494_Sepulveda flujo = null;
+        input.nextLine();
         boolean isActionCompleted = false;
         while (!isActionCompleted) {
             try {
                 index = input.nextInt();
+                input.nextLine();
                 if (index == 0) { //Cancelar operación
                     isActionCompleted = true;
                 }
@@ -114,10 +118,10 @@ public class MenusSeleccionar_17986494_Sepulveda {
      * de opciones, inicia una interacción con el usuario que le permite seleccionar
      * una de las opciones de la lista.
      * 
-     * @param input
-     * @param sys
-     * @param todos
-     * @return
+     * @param input Scanner
+     * @param sys sistema
+     * @param todos lista de opciones
+     * @return opcion escogida
      */
     public static Option_17986494_Sepulveda menuSelectOption(Scanner input, System_17986494_Sepulveda sys, ArrayList <Option_17986494_Sepulveda> todos){
         if (todos.isEmpty()){
@@ -130,7 +134,7 @@ public class MenusSeleccionar_17986494_Sepulveda {
             System.out.println(String.format("%d) %s",i,comp.getMessage()));
             i++;
         }
-        System.out.println("\n\nIngresa el numero de la opcion deseada: \n(Ingrese 0 para cancelar)");
+        System.out.println("\nIngresa el numero de la opcion deseada: \n(Ingrese 0 para cancelar)");
         System.out.print("Numero de opcion: ");
         int index;
         boolean isActionCompleted = false;
@@ -138,6 +142,7 @@ public class MenusSeleccionar_17986494_Sepulveda {
         while (!isActionCompleted){
             try {
                 index = input.nextInt();
+                input.nextLine();
                 if (index == 0) { 
                     isActionCompleted = true; //Cancelar operación
                 }
@@ -153,6 +158,53 @@ public class MenusSeleccionar_17986494_Sepulveda {
             }   
         }
         return option;
+    }
+    
+    /**
+     *Menu para seleccionar un usuario. Dada una lista de los usuarios de un sistema,
+     * inicia una interacción con el usuario que le permite seleccionar
+     * una de las opciones de la lista.
+     * 
+     * @param input Scanner
+     * @param sys sistema
+     * @param todos lista de usuarios
+     * @return usuario escogido
+     */
+    public static User_17986494_Sepulveda menuSelectUser(Scanner input, System_17986494_Sepulveda sys, ArrayList <User_17986494_Sepulveda> todos){
+        if (todos.isEmpty()){
+            System.out.println("No hay opciones disponibles en estos momentos");
+            return null;
+        }
+        System.out.print("Listado de usuarios: \n\n");
+        int i = 1;
+        for (User_17986494_Sepulveda comp: todos){
+            System.out.println(String.format("%d) %s",i,comp.getUsername()));
+            i++;
+        }
+        System.out.println("\nIngresa el numero del usuario deseado: \n(Ingrese 0 para cancelar)");
+        System.out.print("Numero de opcion: ");
+        int index;
+        boolean isActionCompleted = false;
+        User_17986494_Sepulveda user = null;
+        while (!isActionCompleted){
+            try {
+                index = input.nextInt();
+                input.nextLine();
+                if (index == 0) { 
+                    isActionCompleted = true; //Cancelar operación
+                }
+                if (index >= 1 && index <= todos.size()) {
+                    user = todos.get(index - 1);
+                    isActionCompleted = true;
+                } else {
+                    System.out.println("Ingresa un numero valido (entre 1 y " + todos.size() + ")");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Ingresa un numero valido (entre 1 y " + todos.size() + ")");
+                input.next(); // Limpiar el búfer de entrada
+            }   
+        }
+        return user;
     }
     
 }

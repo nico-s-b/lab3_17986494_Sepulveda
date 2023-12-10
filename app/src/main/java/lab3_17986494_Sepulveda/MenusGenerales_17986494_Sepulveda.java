@@ -4,6 +4,8 @@
  */
 package lab3_17986494_Sepulveda;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
@@ -21,18 +23,19 @@ public class MenusGenerales_17986494_Sepulveda {
      * registrar al primer usuario administrador para poder iniciar un sistema vacío,
      * probar el sistema DemoSystem de pruebas o terminar la ejecución.
      * 
-     * @param choice
-     * @param sys
-     * @param input
-     * @param returnToPrev
+     * @param choice opción
+     * @param sys sistema
+     * @param input Scanner
+     * @param returnToPrev bool (volver al menú anterior?)
      */
-    public static void handleMenuFirst(int choice, System_17986494_Sepulveda sys, Scanner input, MutableBool returnToPrev){
+    public static void handleMenuFirst(int choice, System_17986494_Sepulveda sys, Scanner input, MutableBool_17986494_Sepulveda returnToPrev){
         switch (choice) {
             case 1:
                 System.out.println("Ingrese nombre de usuario administrador: ");
-                String userName = input.nextLine();
-                sys.registerUser(userName, true);
-                sys.systemLogin(sys.getAdmin());
+                String adminName = input.nextLine();
+                AdminUser_17986494_Sepulveda admin = new AdminUser_17986494_Sepulveda(adminName);
+                sys.getUsers().add(admin);
+                sys.systemLogin(adminName);
                 TemplateMenu_17986494_Sepulveda.menu(input, sys, PrintingMenuFunctions_17986494_Sepulveda::printMenuAdmin, MenusGenerales_17986494_Sepulveda::handleMenuAdmin);
                 break;
             case 2:
@@ -46,18 +49,19 @@ public class MenusGenerales_17986494_Sepulveda {
                 System.out.println(choice + " No es una opcion valida! Por favor intentelo de nuevo.");
         }
     }
-
+    
     /**
      *Menu de Administrador. Visible sólo si el administrador está loggeado. Permite que
      * éste ejecute todas las acciones de Creación, Modificación y Agregación que permite
      * su privilegio de admin, junto con la gestión de usuarios, además de las acciones
      * de interacción comunes a todo usuario del sistema
-     * @param choice
-     * @param sys
-     * @param input
-     * @param returnToPrev
+     * 
+     * @param choice opción
+     * @param sys sistema
+     * @param input Scanner
+     * @param returnToPrev bool (volver al menú anterior?)
      */
-    public static void handleMenuAdmin(int choice, System_17986494_Sepulveda sys, Scanner input, MutableBool returnToPrev){
+    public static void handleMenuAdmin(int choice, System_17986494_Sepulveda sys, Scanner input, MutableBool_17986494_Sepulveda returnToPrev){
         switch (choice){
             case 1:
                 TemplateMenu_17986494_Sepulveda.menu(input, sys, PrintingMenuFunctions_17986494_Sepulveda::printMenuCrear, MenusGenerales_17986494_Sepulveda::handleMenuCrear);
@@ -76,15 +80,20 @@ public class MenusGenerales_17986494_Sepulveda {
                 System.out.println("Ingrese nombre de nuevo usuario: ");
                 String userName = input.nextLine();
                 try{
-                    sys.registerUser(userName, false);
+                    sys.systemAddUser(userName);
                     System.out.println("Usuario " + userName + " registrado!");
                 }catch(IllegalArgumentException e) {
                     System.out.println("No puede registrar al mismo usuario dos veces!");
                 }
                 break;
             case 6:
-                System.out.println("\nListado de usuarios registrados: \n");
-                sys.registeredUsers();  //Mostrar usuarios registrados
+                System.out.println("Seleccionar el usuario que se desea ver");
+                User_17986494_Sepulveda user = MenusSeleccionar_17986494_Sepulveda.menuSelectUser(input, sys, sys.getUsers());
+                if (user == null){
+                    System.out.println("Operacion terminada sin seleccionar un usuario");
+                    return;
+                }                
+                sys.systemSynthesis(user.getUsername());
                 System.out.println("");
                 break;
             case 7:
@@ -105,22 +114,22 @@ public class MenusGenerales_17986494_Sepulveda {
      *Menú principal de inicio de sistema. Este menú se muestra cuando no hay usuarios
      * con sesión iniciada, permitiendo que un usuario inicie sesión o terminar la ejecución del programa
      * 
-     * @param choice
-     * @param sys
-     * @param input
-     * @param returnToPrev
+     * @param choice opción
+     * @param sys sistema
+     * @param input Scanner
+     * @param returnToPrev bool (volver al menú anterior?)
      */
-    public static void handleMenuMain(int choice, System_17986494_Sepulveda sys, Scanner input, MutableBool returnToPrev){
+    public static void handleMenuMain(int choice, System_17986494_Sepulveda sys, Scanner input, MutableBool_17986494_Sepulveda returnToPrev){
         switch (choice){
             //Iniciar sesión
             case 1:
                 Scanner myObj = new Scanner(System.in); 
                 System.out.println("Ingrese nombre de usuario: ");
                 String userName = myObj.nextLine();
-                sys.systemLogin(sys.getUser(userName));
+                sys.systemLogin(userName);
                 //Dependiendo si inicia sesión el administrador o un usuario
                 //Se deriva a menus distintos
-                if (sys.isLogAdmin()){
+                if (sys.getLoggedUser() instanceof AdminUser_17986494_Sepulveda){
                     TemplateMenu_17986494_Sepulveda.menu(input, sys, PrintingMenuFunctions_17986494_Sepulveda::printMenuAdmin, MenusGenerales_17986494_Sepulveda::handleMenuAdmin);
                 }else{
                     TemplateMenu_17986494_Sepulveda.menu(input, sys, PrintingMenuFunctions_17986494_Sepulveda::printMenuInteractUser, MenusGenerales_17986494_Sepulveda::handleMenuInteract);
@@ -142,25 +151,50 @@ public class MenusGenerales_17986494_Sepulveda {
      * solicitar síntesis de las interacciones del propio usuario, o solicitar una
      * simulación de interacciones.
      * 
-     * @param choice
-     * @param sys
-     * @param input
-     * @param returnToPrev
+     * @param choice opción
+     * @param sys sistema
+     * @param input Scanner
+     * @param returnToPrev bool (volver al menú anterior?)
      */
-    public static void handleMenuInteract(int choice, System_17986494_Sepulveda sys, Scanner input, MutableBool returnToPrev){
+    public static void handleMenuInteract(int choice, System_17986494_Sepulveda sys, Scanner input, MutableBool_17986494_Sepulveda returnToPrev){
         switch (choice) {
             case 1:
                 System.out.print("Iniciando conversacion\n");
                 System.out.print("Para terminar la interaccion, en cualquier momento ingrese 'exit'\n");
-                try{
-                    sys.systemTalk(input);
-                }catch (NullPointerException e){
-                    System.out.println("ERROR: Opcion enlaza a chatbot inexistente o invalido");
-                    System.out.println("Se ha terminado la interacción");
-                }catch (NoSuchElementException e){
-                    System.out.println("ERROR: Opcion enlaza a flujo inexistente o invalido");
-                    System.out.println("Se ha terminado la interacción");
-                }                            
+                sys.setChatbotCodeLink(0); //Devolver chatbot del sistema a 0
+                //Verificar inicio de sesión previo a interacción
+                if(!sys.isLogState()){
+                    System.out.print("Sesion no iniciada, no es posible interactuar");
+                    return;
+                }
+                boolean continueInteraction = true;
+
+                while(continueInteraction){
+                    sys.setInteractDate(new Date());   //fecha de la pregunta
+                    try{
+                        System.out.print(sys.getActualChatbot().toPrint());
+                    }catch (NullPointerException e) {
+                        System.out.println("\nNo hay chatbots en el sistema! No se puede interactuar.");
+                        return;
+                    }
+                    System.out.print("Ingrese opcion: ");
+                    String option = input.nextLine();
+                    System.out.print("\n");
+                    if (option.toLowerCase().equals("exit")) {
+                        continueInteraction = false;
+                        System.out.print("Finalizando conversacion\n");
+                    }else{
+                        try{
+                            sys.systemTalk(option);
+                        }catch (NullPointerException e){
+                            System.out.println("ERROR: Opcion enlaza a chatbot inexistente o invalido");
+                            System.out.println("Se ha terminado la interacción");
+                        }catch (NoSuchElementException e){
+                            System.out.println("ERROR: Opcion enlaza a flujo inexistente o invalido");
+                            System.out.println("Se ha terminado la interacción");
+                        }
+                    }
+                }
                 break;
             //Simulacion
             case 2:    
@@ -200,12 +234,12 @@ public class MenusGenerales_17986494_Sepulveda {
             //Sintesis
             case 3:
                 System.out.print("Solicitando sintesis...\n\n");
-                sys.systemSynthesis(sys.getUser(sys.getLoggedUser()));
+                sys.systemSynthesis(sys.getLoggedUser().getUsername());
                 break;
             case 4:
                 //Si el menu es visto por un usuario normal, esta opción cierra sesión
                 //para volver a menuMain()
-                if (!sys.isLogAdmin()){
+                if (sys.getLoggedUser() instanceof NormalUser_17986494_Sepulveda){
                     sys.systemLogout();
                     returnToPrev.valor = true;
                 }
@@ -221,12 +255,12 @@ public class MenusGenerales_17986494_Sepulveda {
      *Menu de creación de componentes. Realiza los llamados a los menus específicos
      * para crear chatbots, flujos y opciones.
      * 
-     * @param choice
-     * @param sys
-     * @param input
-     * @param returnToPrev
+     * @param choice opción
+     * @param sys sistema
+     * @param input Scanner
+     * @param returnToPrev bool (volver al menú anterior?)
      */
-    public static void handleMenuCrear(int choice, System_17986494_Sepulveda sys, Scanner input, MutableBool returnToPrev){
+    public static void handleMenuCrear(int choice, System_17986494_Sepulveda sys, Scanner input, MutableBool_17986494_Sepulveda returnToPrev){
         switch (choice){
             case 1:
                 MenusCrear_17986494_Sepulveda.menuCrearChatbot(input,sys);
@@ -249,12 +283,12 @@ public class MenusGenerales_17986494_Sepulveda {
      *Menú de modificación de componentes. Realiza los llamados a los menús específicos
      * de modificación de chatbots, flujos y opciones según se desee
      * 
-     * @param choice
-     * @param sys
-     * @param input
-     * @param returnToPrev
+     * @param choice opción
+     * @param sys sistema
+     * @param input Scanner
+     * @param returnToPrev bool (volver al menú anterior?)
      */
-    public static void handleMenuModificar(int choice, System_17986494_Sepulveda sys, Scanner input, MutableBool returnToPrev){
+    public static void handleMenuModificar(int choice, System_17986494_Sepulveda sys, Scanner input, MutableBool_17986494_Sepulveda returnToPrev){
         switch (choice){
             case 1:
                 MenusModificar_17986494_Sepulveda.menuModificarChatbot(input, sys);
@@ -277,12 +311,12 @@ public class MenusGenerales_17986494_Sepulveda {
      *Menú de agregación de componentes. Realiza los llamados a los menús específicos
      * para agregar chatbots al sistema, flujos a un chatbot y opciones a un flujo.
      * 
-     * @param choice
-     * @param sys
-     * @param input
-     * @param returnToPrev
+     * @param choice opción
+     * @param sys sistema
+     * @param input Scanner
+     * @param returnToPrev bool (volver al menú anterior?)
      */
-    public static void handleMenuAgregar(int choice, System_17986494_Sepulveda sys, Scanner input, MutableBool returnToPrev){
+    public static void handleMenuAgregar(int choice, System_17986494_Sepulveda sys, Scanner input, MutableBool_17986494_Sepulveda returnToPrev){
         switch (choice){
             case 1:
                 MenusAgregar_17986494_Sepulveda.menuAgregarChatbot(input, sys);
